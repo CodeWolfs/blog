@@ -3,6 +3,7 @@ server:
 spring:
   application:
     name: blog
+
   #mysql
   datasource:
     username: root
@@ -14,6 +15,9 @@ spring:
     user:
       name: root
       password: root
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
 
 #mybatis-plus

@@ -1,9 +1,11 @@
 package com.wangzhe.blog.utils;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 /**
@@ -18,21 +20,53 @@ public class MybatisPlusGenerator {
     private static final String URL = "jdbc:mysql://localhost:3306/blog";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
+    private static final String BASE_DIR = System.getProperty("user.dir");
 
     public static void main(String[] args) {
+        ArrayList<String> tableName = new ArrayList<>();
+        tableName.add("tb_website_config");
+        tableName.add("tb_article");
+
         FastAutoGenerator.create(URL, USERNAME, PASSWORD)
                 .globalConfig(builder -> {
                     builder.author("WZ") // 设置作者
                             .enableSwagger() // 开启 swagger 模式
-                            .outputDir("D://test"); // 指定输出目录
+                            .commentDate("yyyy-mm-dd")
+                            .outputDir(BASE_DIR + "\\src\\main\\java"); // 指定输出目录
                 })
                 .packageConfig(builder -> {
-                    builder.parent("com.wangzhe.blog") // 设置父包名
-                            .pathInfo(Collections.singletonMap(OutputFile.xml, "D://")); // 设置mapperXml生成路径
+                    builder.parent("com.wangzhe") // 设置父包名
+                            .moduleName("blog")
+                            .entity("entity")
+                            .service("service")
+                            .serviceImpl("service.Impl")
+                            .mapper("mapper")
+                            .xml("mapper")
+                            .pathInfo(Collections.singletonMap(OutputFile.xml, BASE_DIR + "\\src\\main\\resources\\mapper")); // 设置mapperXml生成路径
                 })
                 .strategyConfig(builder -> {
-                    builder.addInclude("t_simple") // 设置需要生成的表名
-                            .addTablePrefix("t_", "c_"); // 设置过滤表前缀
+                    builder.addInclude(tableName) // 设置需要生成的表名
+                            .addTablePrefix("tb_", "c_") // 设置过滤表前缀
+                            .serviceBuilder()
+                            .fileOverride()
+                            .formatServiceFileName("%sService")
+                            .formatServiceImplFileName("%sServiceImpl")
+                            .entityBuilder()
+                            .fileOverride()
+                            .enableLombok()
+                            .logicDeleteColumnName("deleted")
+                            .enableTableFieldAnnotation()
+                            .controllerBuilder()
+                            .fileOverride()
+                            .formatFileName("%sController")
+                            .enableRestStyle()
+                            .mapperBuilder()
+                            .fileOverride()
+                            .enableBaseResultMap()
+                            .superClass(BaseMapper.class)
+                            .formatMapperFileName("%sMapper")
+                            .enableMapperAnnotation()
+                            .formatMapperFileName("%sMapper");
                 })
                 .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
                 .execute();
