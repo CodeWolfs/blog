@@ -1,0 +1,25 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: blog
+  #mysql
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/blog
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  #security
+  security:
+    user:
+      name: root
+      password: root
+
+
+#mybatis-plus
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+
