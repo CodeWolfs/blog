@@ -9,6 +9,7 @@ import com.wangzhe.blog.exception.BizException;
 import com.wangzhe.blog.mapper.UserAuthMapper;
 import com.wangzhe.blog.service.UserAuthService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.wangzhe.blog.vo.EmailVo;
 import com.wangzhe.blog.vo.UserRegisterVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +45,18 @@ public class UserAuthServiceImpl extends ServiceImpl<UserAuthMapper, UserAuth> i
         String encode = passwordEncoder.encode(userAuth.getPassword());
         userAuth.setPassword(encode);
         userAuthMapper.insert(userAuth);
+    }
+
+    @Override
+    public void sendRegisterMailCode(EmailVo emailVo) {
+        LambdaQueryWrapper<UserAuth> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(UserAuth::getUsername,emailVo.getEmail());
+        Long count = userAuthMapper.selectCount(queryWrapper);
+        if(count > 0) {
+            throw new BizException(ResultCode.EMAIL_EXIST);
+        }
+
+
+
     }
 }

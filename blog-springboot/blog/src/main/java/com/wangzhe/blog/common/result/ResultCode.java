@@ -38,6 +38,12 @@ public enum ResultCode {
      * 用户名不存在
      */
     USERNAME_NOT_EXIST(52002, "用户名不存在"),
+
+    /**
+     * 邮箱已被注册
+     */
+    EMAIL_EXIST(52003,"邮箱已被注册"),
+
     /**
      * qq登录错误
      */
@@ -46,6 +52,8 @@ public enum ResultCode {
      * 微博登录错误
      */
     WEIBO_LOGIN_ERROR(53002, "微博登录错误");
+
+
 
     /**
      * 状态码

@@ -2,6 +2,7 @@ package com.wangzhe.blog.controller;
 
 import com.wangzhe.blog.common.result.Result;
 import com.wangzhe.blog.service.UserAuthService;
+import com.wangzhe.blog.vo.EmailVo;
 import com.wangzhe.blog.vo.UserLoginVo;
 import com.wangzhe.blog.vo.UserRegisterVo;
 import io.swagger.annotations.Api;
@@ -33,6 +34,14 @@ public class UserAuthController {
     @PostMapping("/register")
     public Result<?> register(@Validated @RequestBody UserRegisterVo userRegisterVo) {
         authService.register(userRegisterVo);
+        return Result.ok();
+    }
+
+    @ApiOperation("发送注册验证码")
+    @PostMapping("/sendRegisterMailCode")
+    public Result<?> sendRegisterMailCode(@Validated EmailVo emailVo) {
+
+
         return Result.ok();
     }
 

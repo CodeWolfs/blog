@@ -2,6 +2,7 @@ package com.wangzhe.blog.service;
 
 import com.wangzhe.blog.entity.UserAuth;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.wangzhe.blog.vo.EmailVo;
 import com.wangzhe.blog.vo.UserRegisterVo;
 
 /**
@@ -15,5 +16,7 @@ import com.wangzhe.blog.vo.UserRegisterVo;
 public interface UserAuthService extends IService<UserAuth> {
 
     void register(UserRegisterVo userRegisterVo);
+
+    void sendRegisterMailCode(EmailVo emailVo);
 
 }
