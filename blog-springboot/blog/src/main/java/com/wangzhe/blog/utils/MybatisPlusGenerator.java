@@ -24,19 +24,22 @@ public class MybatisPlusGenerator {
 
     public static void main(String[] args) {
         ArrayList<String> tableName = new ArrayList<>();
-        tableName.add("tb_website_config");
-        tableName.add("tb_article");
+        tableName.add("user_auth");
+        tableName.add("user_info");
+        tableName.add("role");
+        tableName.add("resource");
+        tableName.add("role_resource_relation");
 
         FastAutoGenerator.create(URL, USERNAME, PASSWORD)
                 .globalConfig(builder -> {
-                    builder.author("WZ") // 设置作者
+                    builder.author("wz") // 设置作者
                             .enableSwagger() // 开启 swagger 模式
                             .commentDate("yyyy-mm-dd")
                             .outputDir(BASE_DIR + "\\src\\main\\java"); // 指定输出目录
                 })
                 .packageConfig(builder -> {
-                    builder.parent("com.wangzhe") // 设置父包名
-                            .moduleName("blog")
+                    builder.parent("com.wangzhe.blog") // 设置父包名
+//                            .moduleName("blog") //会显示在路径中
                             .entity("entity")
                             .service("service")
                             .serviceImpl("service.Impl")

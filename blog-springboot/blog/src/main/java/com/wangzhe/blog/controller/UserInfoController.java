@@ -5,14 +5,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
- * 博客配置信息 前端控制器
+ * 用户详细信息 前端控制器
  * </p>
  *
- * @author WZ
- * @since 2022-52-03
+ * @author wz
+ * @since 2022-22-04
  */
 @RestController
-@RequestMapping("/blog/websiteConfig")
-public class WebsiteConfigController {
+@RequestMapping("/userInfo")
+public class UserInfoController {
 
 }

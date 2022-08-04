@@ -1,8 +1,10 @@
 package com.wangzhe.blog.controller;
 
 import com.wangzhe.blog.common.result.Result;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author WangZhe
@@ -13,9 +15,25 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
+@Api(tags = "index测试模块")
+@RequestMapping("/blog/index")
 public class IndexController {
-    @GetMapping("/")
+
+    @PostMapping("test")
+    @ApiOperation("post test")
     public Result<?> index() {
-        return Result.ok("index");
+        return Result.ok();
+    }
+
+    @GetMapping("/test")
+    @ApiOperation("get test")
+    public Result<?> test() {
+        return Result.ok();
+    }
+
+    @GetMapping("/error")
+    @ApiOperation("get error")
+    public Result<?> error() {
+        return Result.ok();
     }
 }

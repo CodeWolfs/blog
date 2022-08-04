@@ -5,14 +5,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
- * 博客文章 前端控制器
+ * 用户角色 前端控制器
  * </p>
  *
- * @author WZ
- * @since 2022-52-03
+ * @author wz
+ * @since 2022-22-04
  */
 @RestController
-@RequestMapping("/blog/article")
-public class ArticleController {
+@RequestMapping("/role")
+public class RoleController {
 
 }

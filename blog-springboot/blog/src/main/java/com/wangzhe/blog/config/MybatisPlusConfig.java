@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
  * @author WangZhe
  * @version 1.0
  * @className MybatisPlusConfig
- * @description
+ * @description MybatisPlus配置类
  * @date 2022/8/3 17:33
  */
 

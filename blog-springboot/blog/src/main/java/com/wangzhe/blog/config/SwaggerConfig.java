@@ -1,14 +1,6 @@
 package com.wangzhe.blog.config;
 
-/**
- * @ClassName SwaggerConfig
- * @Description TODO
- * @Author WangZhe
- * @Date 2022/5/18 10:21
- * @Version 1.0
- */
 
-import com.google.common.base.Predicate;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.CorsEndpointProperties;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointProperties;
 import org.springframework.boot.actuate.autoconfigure.web.server.ManagementPortType;
@@ -21,12 +13,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RestController;
-import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
-//import springfox.documentation.oas.annotations.EnableOpenApi;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
@@ -37,45 +26,41 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+
 /***
- * @author qingfeng.zhao
- * @date 2022/3/26
- * @apiNote
- */
-//@EnableOpenApi
+ * @author WangZhe
+ * @description swagger配置类
+ * @Date 9:00 2022/8/4
+ **/
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
-    /**
-     * 配置基本信息
-     * @return
-     */
 
     @Bean
-    public ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("MALL-WZ Restful API")
-                .description("MALL-WZ restful api")
-                .termsOfServiceUrl("https://www.baidu.com")
-                .contact(new Contact("wangzhe","https://wang_zhe343621.gitee.io/","2546972682@qq.com"))
-                .version("1.0")
+    public Docket createRestApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo())
+                //是否开启 (true 开启  false隐藏。生产环境建议隐藏)
+                //.enable(false)
+                .select()
+                //扫描的路径包,设置basePackage会将包下的所有被@Api标记类的所有方法作为api
+                .apis(RequestHandlerSelectors.basePackage("com.wangzhe.blog.controller"))
+                //指定路径处理PathSelectors.any()代表所有的路径
+                .paths(PathSelectors.any())
                 .build();
     }
 
-    /**
-     * 配置文档生成最佳实践
-     * @param apiInfo
-     * @return
-     */
-    @Bean
-    public Docket createRestApi(ApiInfo apiInfo) {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo)
-                .groupName("后台管理接口")
-                .host("localhost:8080")
-                .select()
-                .apis((Predicate<RequestHandler>) RequestHandlerSelectors.basePackage("com.wangzhe.mallwz"))
-                .paths((Predicate<String>) PathSelectors.any())
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                //设置文档标题(API名称)
+                .title("blog接口规范")
+                //文档描述
+                .description("接口说明")
+                //服务条款URL
+                .termsOfServiceUrl("http://localhost:8080/")
+                .contact(new Contact("wangzhe","https://wang_zhe343621.gitee.io/","2546972682@qq.com"))
+                //版本号
+                .version("1.0.0")
                 .build();
     }
 
