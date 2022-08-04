@@ -20,14 +20,12 @@ import javax.validation.constraints.NotNull;
 @ApiModel("用户注册信息")
 public class UserRegisterVo {
 
-    @ApiModelProperty("用户名")
+    @ApiModelProperty(value = "用户名",required = true)
     @NotBlank(message = "用户名不能为空")
-    @NotNull
     private String username;
 
-    @ApiModelProperty("密码")
+    @ApiModelProperty(value = "密码",required = true)
     @NotBlank(message = "密码不能为空")
-    @NotNull
     private String password;
 
 }
