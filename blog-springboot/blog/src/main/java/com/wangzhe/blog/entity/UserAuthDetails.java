@@ -21,74 +21,82 @@ import java.util.stream.Collectors;
  */
 
 @Data
-@Builder
 public class UserAuthDetails implements UserDetails {
+//
+//    /**
+//     * 用户认证id
+//     */
+//    private Integer id;
+//
+//    /**
+//     * 用户信息id
+//     */
+//    private Integer userInfoId;
+//
+//    /**
+//     * 用户名
+//     */
+//    private String username;
+//
+//    /**
+//     * 密码
+//     */
+//    private String password;
+//
+//    /**
+//     * 登录类型
+//     */
+//    private String loginType;
+//
+//    /**
+//     * ip地址
+//     */
+//    private String ipAddress;
+//
+//    /**
+//     * ip原地址
+//     */
+//    private String ipSource;
+//
+//    /**
+//     * 上次登录时间
+//     */
+//    private LocalDateTime lastLoginTime;
+//
+//    /**
+//     * 用户网名
+//     */
+//    private String nickname;
+//
+//    /**
+//     * 头像
+//     */
+//    private String avatar;
+//
+//    /**
+//     * 个人简介
+//     */
+//    private String intro;
+//
+//    /**
+//     * 个人网站
+//     */
+//    private String website;
+//
+//    /**
+//     * 账号是否禁用
+//     */
+//    private String isDisable;
 
     /**
-     * 用户认证id
+     * 用户认证信息
      */
-    private Integer id;
+    private UserAuth userAuth;
 
     /**
-     * 用户信息id
+     * 用户个人信息
      */
-    private Integer userInfoId;
-
-    /**
-     * 用户名
-     */
-    private String username;
-
-    /**
-     * 密码
-     */
-    private String password;
-
-    /**
-     * 登录类型
-     */
-    private String loginType;
-
-    /**
-     * ip地址
-     */
-    private String ipAddress;
-
-    /**
-     * ip原地址
-     */
-    private String ipSource;
-
-    /**
-     * 上次登录时间
-     */
-    private LocalDateTime lastLoginTime;
-
-    /**
-     * 用户网名
-     */
-    private String nickname;
-
-    /**
-     * 头像
-     */
-    private String avatar;
-
-    /**
-     * 个人简介
-     */
-    private String intro;
-
-    /**
-     * 个人网站
-     */
-    private String website;
-
-    /**
-     * 账号是否禁用
-     */
-    private String isDisable;
-
+    private UserInfo userInfo;
 
     /**
      * 用户资源
@@ -102,12 +110,12 @@ public class UserAuthDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return password;
+        return userAuth.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return username;
+        return userAuth.getUsername();
     }
 
 
@@ -118,7 +126,7 @@ public class UserAuthDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return this.isDisable.equals("0");
+        return userInfo.getIsDisabled().equals("0");
     }
 
     @Override

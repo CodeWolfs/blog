@@ -1,4 +1,4 @@
-package com.wangzhe.blog.common;
+package com.wangzhe.blog.common.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

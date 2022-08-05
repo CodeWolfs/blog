@@ -3,6 +3,9 @@ package com.wangzhe.blog.mapper;
 import com.wangzhe.blog.entity.Resource;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,5 +17,7 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface ResourceMapper extends BaseMapper<Resource> {
+
+    List<Resource> selectResourceListByUserInfoId(@Param("userInfoId") Integer userInfoId);
 
 }

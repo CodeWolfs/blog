@@ -39,6 +39,7 @@ public enum ResultCode {
      */
     USERNAME_NOT_EXIST(52002, "用户名不存在"),
 
+
     /**
      * 邮箱已被注册
      */
@@ -51,8 +52,38 @@ public enum ResultCode {
     /**
      * 微博登录错误
      */
-    WEIBO_LOGIN_ERROR(53002, "微博登录错误");
+    WEIBO_LOGIN_ERROR(53002, "微博登录错误"),
 
+    /**
+     * 用户名或密码错误
+     */
+    USERNAME_OR_PASSWORD_ERROR(53003,"用户名或密码错误"),
+
+    /**
+     * 账号已被禁用
+     */
+    ACCOUNT_DISABLED(53004,"账户已被禁用"),
+
+    /**
+     *没有登录
+     */
+    NOT_LOGIN(53005,"没有登录"),
+
+    /**
+     * 邮箱验证码错误
+     */
+    EMAIL_CODE_ERROR(54001,"验证码错误"),
+
+    /**
+     *没有发送验证码或者验证码过期
+     */
+    EMAIL_CODE_NULL(54002,"没有发送验证码或者验证码过期"),
+
+
+    /**
+     * 构造结束
+     */
+    CODE_END(1234,"构造结束");
 
 
     /**

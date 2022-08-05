@@ -1,10 +1,7 @@
 package com.wangzhe.blog.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
@@ -57,12 +54,13 @@ public class UserAuth implements Serializable {
     private String ipSource;
 
     @ApiModelProperty("创建时间")
-    @TableField("create_time")
+    @TableField(value = "create_time",fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     @ApiModelProperty("更新时间")
-    @TableField("update_time")
+    @TableField(value = "update_time",fill = FieldFill.UPDATE)
     private LocalDateTime updateTime;
+
 
     @ApiModelProperty("上一次登录时间")
     @TableField("last_login_time")

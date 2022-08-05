@@ -1,6 +1,7 @@
 package com.wangzhe.blog.vo;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.wangzhe.blog.common.validated.annotation.CustomerEmail;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -22,10 +23,15 @@ public class UserRegisterVo {
 
     @ApiModelProperty(value = "用户名",required = true)
     @NotBlank(message = "用户名不能为空")
+    @CustomerEmail
     private String username;
 
     @ApiModelProperty(value = "密码",required = true)
     @NotBlank(message = "密码不能为空")
     private String password;
+
+    @ApiModelProperty(value = "密码",required = true)
+    @NotBlank(message = "验证码不能为空")
+    private String code;
 
 }

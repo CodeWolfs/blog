@@ -9,11 +9,14 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
 
 /**
  * <p>
@@ -29,6 +32,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserAuthController {
     @Autowired
     private UserAuthService authService;
+    @Value("${jwt.tokenHeader}")
+    private String tokenHeader;
+    @Value("${jwt.tokenHead}")
+    private String tokenHead;
+
 
     @ApiOperation("用户注册")
     @PostMapping("/register")
@@ -40,16 +48,19 @@ public class UserAuthController {
     @ApiOperation("发送注册验证码")
     @PostMapping("/sendRegisterMailCode")
     public Result<?> sendRegisterMailCode(@Validated EmailVo emailVo) {
-
-
+        authService.sendRegisterMailCode(emailVo);
         return Result.ok();
     }
 
-    @ApiOperation("用户登录")
+    @ApiOperation("用户登录,返回token")
     @PostMapping("/login")
     public Result<?> login(@Validated @RequestBody UserLoginVo userLoginVo) {
-
-        return Result.ok();
+        String token = authService.login(userLoginVo);
+        HashMap<String, String> tokenMap = new HashMap<>();
+        tokenMap.put("token",token);
+        tokenMap.put("tokenHead",tokenHead);
+        tokenMap.put("tokenHeader",tokenHeader);
+        return Result.ok(tokenMap);
     }
 
 }

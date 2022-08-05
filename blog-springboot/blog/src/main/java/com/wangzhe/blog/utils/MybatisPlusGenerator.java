@@ -24,10 +24,10 @@ public class MybatisPlusGenerator {
 
     public static void main(String[] args) {
         ArrayList<String> tableName = new ArrayList<>();
-        tableName.add("user_auth");
-        tableName.add("user_info");
-        tableName.add("role");
-        tableName.add("resource");
+//        tableName.add("user_auth");
+//        tableName.add("user_info");
+//        tableName.add("role");
+//        tableName.add("resource");
         tableName.add("role_resource_relation");
 
         FastAutoGenerator.create(URL, USERNAME, PASSWORD)

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
-import static com.wangzhe.blog.common.ZoneEnum.SHANGHAI;
+import static com.wangzhe.blog.common.enums.ZoneEnum.SHANGHAI;
 
 /**
  * @author WangZhe
