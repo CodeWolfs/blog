@@ -1,6 +1,7 @@
 package com.wangzhe.blog.handler;
 
 import cn.hutool.json.JSONUtil;
+import com.wangzhe.blog.common.result.Result;
 import com.wangzhe.blog.common.result.ResultCode;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -27,7 +28,7 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
         response.setHeader("Cache-Control","no-cache");
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
-        response.getWriter().println(JSONUtil.parse(ResultCode.NOT_LOGIN));
+        response.getWriter().println(JSONUtil.parse(Result.fail(ResultCode.NOT_LOGIN)));
         response.getWriter().flush();
     }
 }

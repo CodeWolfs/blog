@@ -2,6 +2,7 @@ package com.wangzhe.blog.config;
 
 import com.wangzhe.blog.filter.JwtAuthenticationTokenFilter;
 import com.wangzhe.blog.service.UserAuthService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,9 +30,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@Log4j2
 public class SecurityConfig{
-    @Autowired
-    private UserAuthService userAuthService;
 
     @Autowired
     private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
@@ -42,28 +42,19 @@ public class SecurityConfig{
     @Autowired
     AccessDeniedHandler accessDeniedHandler;
 
+    @Autowired
+    IgnoreUrlsConfig ignoreUrlsConfig;
 
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return username -> userAuthService.loadUserByUsername(username);
-    }
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = httpSecurity
                 .authorizeRequests();
-        IgnoreUrlsConfig ignoreUrlsConfig = new IgnoreUrlsConfig();
         for (String url :
                 ignoreUrlsConfig.getUrls()) {
+            System.out.println(url);
             registry.antMatchers(url).permitAll();
         }
-
 
         registry.and()
                 .authorizeRequests()

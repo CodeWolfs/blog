@@ -67,7 +67,6 @@ secure:
       - /swagger-ui/
       - /swagger-resources/**
       - /**/v2/api-docs
-      - /blog/doc.html
       - /**/*.html
       - /**/*.js
       - /**/*.css
@@ -75,8 +74,8 @@ secure:
       - /favicon.ico
       - /actuator/**
       - /druid/**
-      - /blog/userAuth/register
-      - /blog/userAuth/sendRegisterMailCode
-      - /blog/userAuth/login
+      - /userAuth/register
+      - /userAuth/sendRegisterMailCode
+      - /userAuth/login
 
 
