@@ -1,4 +1,4 @@
-package com.wangzhe.blog.config;
+package com.wangzhe.blog.security;
 
 import lombok.Getter;
 import lombok.Setter;

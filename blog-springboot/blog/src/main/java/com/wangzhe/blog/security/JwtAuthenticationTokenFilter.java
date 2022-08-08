@@ -1,6 +1,7 @@
-package com.wangzhe.blog.filter;
+package com.wangzhe.blog.security;
 
 import com.wangzhe.blog.utils.JwtTokenUtil;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,6 +26,7 @@ import java.io.IOException;
  * @date 2022/8/5 16:34
  */
 @Component
+@Log4j2
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     @Autowired
     private UserDetailsService userDetailsService;

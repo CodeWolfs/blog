@@ -16,12 +16,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Api(tags = "index测试模块")
-@RequestMapping("/blog/index")
+@RequestMapping("/index")
 public class IndexController {
 
     @PostMapping("test")
     @ApiOperation("post test")
     public Result<?> index() {
+        System.out.println(123);
         return Result.ok();
     }
 

@@ -1,4 +1,4 @@
-package com.wangzhe.blog.handler;
+package com.wangzhe.blog.security;
 
 import cn.hutool.json.JSONUtil;
 import com.wangzhe.blog.common.result.Result;

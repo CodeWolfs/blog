@@ -20,4 +20,5 @@ public interface ResourceMapper extends BaseMapper<Resource> {
 
     List<Resource> selectResourceListByUserInfoId(@Param("userInfoId") Integer userInfoId);
 
+
 }
