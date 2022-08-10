@@ -3,14 +3,12 @@ package com.wangzhe.blog.controller;
 import com.wangzhe.blog.common.result.Result;
 import com.wangzhe.blog.service.ArticleService;
 import com.wangzhe.blog.vo.SaveArticleVo;
+import com.wangzhe.blog.vo.SelectArticlesVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -26,10 +24,17 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
-    @ApiOperation("发布文章")
+    @ApiOperation("后台发布文章")
     @PostMapping("/admin/article")
     public Result<?> saveArticle(@Validated @RequestBody SaveArticleVo saveArticleVo){
         articleService.saveArticle(saveArticleVo);
+        return Result.ok();
+    }
+
+    @ApiOperation("后台查询文章")
+    @GetMapping("/admin/articles")
+    public Result<?> selectArticles(@Validated SelectArticlesVo selectArticlesVo) {
+
         return Result.ok();
     }
 

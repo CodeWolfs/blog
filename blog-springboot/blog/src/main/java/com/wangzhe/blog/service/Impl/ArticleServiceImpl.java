@@ -1,11 +1,11 @@
 package com.wangzhe.blog.service.Impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.wangzhe.blog.entity.Article;
-import com.wangzhe.blog.entity.ArticleTagRelation;
-import com.wangzhe.blog.entity.Category;
+import com.wangzhe.blog.entity.*;
 import com.wangzhe.blog.mapper.ArticleMapper;
 import com.wangzhe.blog.mapper.ArticleTagRelationMapper;
 import com.wangzhe.blog.mapper.CategoryMapper;
@@ -13,11 +13,17 @@ import com.wangzhe.blog.mapper.TagMapper;
 import com.wangzhe.blog.service.ArticleService;
 import com.wangzhe.blog.service.ArticleTagRelationService;
 import com.wangzhe.blog.service.CategoryService;
+import com.wangzhe.blog.service.TagService;
+import com.wangzhe.blog.utils.SecurityUtil;
 import com.wangzhe.blog.vo.SaveArticleVo;
+import com.wangzhe.blog.vo.SelectArticlesVo;
+import io.jsonwebtoken.lang.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,18 +52,25 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Autowired
     private ArticleTagRelationService articleTagRelationService;
 
+    @Autowired
+    private TagMapper tagMapper;
+    @Autowired
+    private TagService tagService;
+
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void saveArticle(SaveArticleVo saveArticleVo) {
         Article article = new Article();
         BeanUtil.copyProperties(saveArticleVo, article);
-        articleMapper.insert(article);
+        UserAuthDetails userDetails = SecurityUtil.getUserDetails();
+        article.setUserId(userDetails.getUserInfo().getId());
         //处理分类
-        Integer integer = categoryService.saveCategory(saveArticleVo.getCategoryName());
-        article.setCategoryId(integer);
+        Category category = categoryHandler(saveArticleVo.getCategoryName());
+        article.setCategoryId(category.getId());
         //保存
         save(article);
+        //处理tag
         List<Integer> tagIdList = tagHandler(saveArticleVo.getTagList());
         List<ArticleTagRelation> collect = tagIdList.stream().map(tagId -> {
             ArticleTagRelation articleTagRelation = new ArticleTagRelation();
@@ -68,8 +81,53 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         articleTagRelationService.saveBatch(collect);
     }
 
+    /**
+     * 保存tagNameList(保存不存在的）
+     * @param tagNameList  标签名列表
+     * @return 返回所有的tagIdList
+     */
     private List<Integer> tagHandler(List<String> tagNameList) {
+        LambdaQueryWrapper<Tag> tagLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        tagLambdaQueryWrapper.in(Tag::getTagName, tagNameList);
+        List<Tag> existTagList = tagMapper.selectList(tagLambdaQueryWrapper);
+        List<String> existTagNameList = existTagList.stream().map(Tag::getTagName).collect(Collectors.toList());
+        List<Integer> existTagIdList = existTagList.stream().map(Tag::getId).collect(Collectors.toList());
+        //保存不存在的tagName
+        tagNameList.removeAll(existTagNameList);
+        if(CollUtil.isNotEmpty(tagNameList)) {
+            List<Tag> TagList = tagNameList.stream().map(tagName -> {
+                Tag tag = new Tag();
+                tag.setTagName(tagName);
+                return tag;
+            }).collect(Collectors.toList());
+            tagService.saveBatch(TagList);
+            List<Integer> collect = TagList.stream().map(Tag::getId).collect(Collectors.toList());
+            existTagIdList.addAll(collect);
+        }
+        return existTagIdList;
+    }
 
-        return null;
+    /**
+     * 保存文章处理分类
+     */
+    private Category categoryHandler(String categoryName) {
+        LambdaQueryWrapper<Category> categoryLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        categoryLambdaQueryWrapper.eq(Category::getCategoryName,categoryName);
+        Category category = categoryMapper.selectOne(categoryLambdaQueryWrapper);
+        if(BeanUtil.isEmpty(category)) {
+            category = new Category();
+            category.setCategoryName(categoryName);
+            categoryMapper.insert(category);
+        }
+        return category;
+    }
+
+    @Override
+    public void selectArticlesAdmin(SelectArticlesVo selectArticlesVo) {
+
+        Page<Article> articlePage = new Page<>(1,1);
+
+
+
     }
 }
