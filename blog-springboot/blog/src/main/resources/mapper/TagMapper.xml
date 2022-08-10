@@ -9,5 +9,9 @@
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />
     </resultMap>
+    <select id="selectTagNameByArticleId" resultType="java.lang.String">
+        select t.tag_name from article_tag_relation atr join tag t on atr.tag_id = t.id
+        where atr.article_id = #{articleId}
+    </select>
 
 </mapper>

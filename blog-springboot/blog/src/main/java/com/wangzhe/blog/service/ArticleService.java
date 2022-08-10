@@ -1,5 +1,7 @@
 package com.wangzhe.blog.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.wangzhe.blog.dto.SelectArticleDto;
 import com.wangzhe.blog.entity.Article;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.wangzhe.blog.vo.SaveArticleVo;
@@ -23,6 +25,6 @@ public interface ArticleService extends IService<Article> {
     /**
      * 后台查询文章
      */
-    void selectArticlesAdmin(SelectArticlesVo selectArticlesVo);
+    Page<SelectArticleDto> selectArticlesAdmin(SelectArticlesVo selectArticlesVo);
 
 }

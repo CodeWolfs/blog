@@ -1,6 +1,8 @@
 package com.wangzhe.blog.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wangzhe.blog.common.result.Result;
+import com.wangzhe.blog.dto.SelectArticleDto;
 import com.wangzhe.blog.service.ArticleService;
 import com.wangzhe.blog.vo.SaveArticleVo;
 import com.wangzhe.blog.vo.SelectArticlesVo;
@@ -34,8 +36,8 @@ public class ArticleController {
     @ApiOperation("后台查询文章")
     @GetMapping("/admin/articles")
     public Result<?> selectArticles(@Validated SelectArticlesVo selectArticlesVo) {
-
-        return Result.ok();
+        Page<SelectArticleDto> selectArticleDtoPage = articleService.selectArticlesAdmin(selectArticlesVo);
+        return Result.ok(selectArticleDtoPage);
     }
 
 }

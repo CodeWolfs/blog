@@ -5,6 +5,7 @@ import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.wangzhe.blog.dto.SelectArticleDto;
 import com.wangzhe.blog.entity.*;
 import com.wangzhe.blog.mapper.ArticleMapper;
 import com.wangzhe.blog.mapper.ArticleTagRelationMapper;
@@ -123,11 +124,10 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public void selectArticlesAdmin(SelectArticlesVo selectArticlesVo) {
+    public Page<SelectArticleDto> selectArticlesAdmin(SelectArticlesVo selectArticlesVo) {
+        Page<SelectArticleDto> page = new Page<>(selectArticlesVo.getPageNum(),selectArticlesVo.getPageSize());
+        Page<SelectArticleDto> articlePage = articleMapper.selectArticleListForAdminByCondition(page, selectArticlesVo);
 
-        Page<Article> articlePage = new Page<>(1,1);
-
-
-
+        return articlePage;
     }
 }

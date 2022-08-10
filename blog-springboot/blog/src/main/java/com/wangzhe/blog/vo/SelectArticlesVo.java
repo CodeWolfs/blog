@@ -2,8 +2,7 @@ package com.wangzhe.blog.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -16,9 +15,12 @@ import javax.validation.constraints.NotEmpty;
  * @date 2022/8/9 9:37
  */
 
+@EqualsAndHashCode(callSuper = true)
 @ApiModel("后台文章查询入参")
 @Data
-public class SelectArticlesVo {
+@AllArgsConstructor
+@NoArgsConstructor
+public class SelectArticlesVo extends PagePropertyVo{
 
     @ApiModelProperty(value = "状态,1公开,2私密,3草稿箱")
     private String status;
