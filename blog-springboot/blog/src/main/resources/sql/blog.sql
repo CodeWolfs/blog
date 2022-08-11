@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost
+ Source Server         : mysql_localhost
  Source Server Type    : MySQL
  Source Server Version : 80027
  Source Host           : localhost:3306
@@ -11,11 +11,76 @@
  Target Server Version : 80027
  File Encoding         : 65001
 
- Date: 05/08/2022 17:57:48
+ Date: 11/08/2022 20:06:04
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for article
+-- ----------------------------
+DROP TABLE IF EXISTS `article`;
+CREATE TABLE `article`  (
+  `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT '文章id',
+  `user_id` int(0) NOT NULL COMMENT '作者用户id',
+  `category_id` int(0) NOT NULL COMMENT '分类id',
+  `article_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '文章标题',
+  `article_cover` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '文章缩略图',
+  `article_content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '文章内容',
+  `article_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '文章类型，1：原创，2：转载，3：翻译',
+  `origin_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '原文链接',
+  `is_top` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0' COMMENT '置顶状态：1置顶，0否',
+  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '状态1：公开，2：私密，3：草稿',
+  `deleted` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0' COMMENT '逻辑删除，0没有删除1：删除',
+  `create_time` datetime(0) NOT NULL COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of article
+-- ----------------------------
+INSERT INTO `article` VALUES (0000000005, 2, 5, '测试123', '测试123', '测试123', '1', '', '1', '1', '0', '2022-08-11 15:09:46', NULL);
+INSERT INTO `article` VALUES (0000000006, 2, 5, '测试123', '测试123', '测试123', '1', '', '1', '1', '0', '2022-08-11 15:09:46', NULL);
+INSERT INTO `article` VALUES (0000000007, 2, 5, '测试123', '测试123', '测试123', '1', '', '1', '1', '0', '2022-08-11 15:09:47', NULL);
+
+-- ----------------------------
+-- Table structure for article_tag_relation
+-- ----------------------------
+DROP TABLE IF EXISTS `article_tag_relation`;
+CREATE TABLE `article_tag_relation`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '文章标签关联id',
+  `article_id` int(0) NOT NULL COMMENT '文章id',
+  `tag_id` int(0) NOT NULL COMMENT '标签id',
+  `create_time` datetime(0) NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of article_tag_relation
+-- ----------------------------
+INSERT INTO `article_tag_relation` VALUES (1, 3, 3, '2022-08-11 15:09:07');
+INSERT INTO `article_tag_relation` VALUES (2, 4, 3, '2022-08-11 15:09:45');
+INSERT INTO `article_tag_relation` VALUES (3, 5, 3, '2022-08-11 15:09:46');
+INSERT INTO `article_tag_relation` VALUES (4, 6, 3, '2022-08-11 15:09:47');
+INSERT INTO `article_tag_relation` VALUES (5, 7, 3, '2022-08-11 15:09:47');
+
+-- ----------------------------
+-- Table structure for category
+-- ----------------------------
+DROP TABLE IF EXISTS `category`;
+CREATE TABLE `category`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '分类id',
+  `category_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '分类名称',
+  `create_time` datetime(0) NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of category
+-- ----------------------------
+INSERT INTO `category` VALUES (5, '1', '2022-08-11 15:09:07');
 
 -- ----------------------------
 -- Table structure for resource
@@ -77,6 +142,22 @@ CREATE TABLE `role_resource_relation`  (
 -- Records of role_resource_relation
 -- ----------------------------
 INSERT INTO `role_resource_relation` VALUES (1, 1, 2, '2022-08-05 15:45:00', NULL);
+
+-- ----------------------------
+-- Table structure for tag
+-- ----------------------------
+DROP TABLE IF EXISTS `tag`;
+CREATE TABLE `tag`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '标签id',
+  `tag_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '标签名',
+  `create_time` datetime(0) NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of tag
+-- ----------------------------
+INSERT INTO `tag` VALUES (3, '1', '2022-08-11 15:09:07');
 
 -- ----------------------------
 -- Table structure for user_auth
