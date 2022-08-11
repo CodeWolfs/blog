@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wangzhe.blog.dto.SelectArticleDto;
 import com.wangzhe.blog.entity.Article;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.wangzhe.blog.vo.DeleteArticleListVo;
 import com.wangzhe.blog.vo.SaveArticleVo;
 import com.wangzhe.blog.vo.SelectArticlesVo;
 
@@ -26,5 +27,10 @@ public interface ArticleService extends IService<Article> {
      * 后台查询文章
      */
     Page<SelectArticleDto> selectArticlesAdmin(SelectArticlesVo selectArticlesVo);
+
+    /**
+     * 后台删除文章
+     */
+    void deleteArticleList(DeleteArticleListVo deleteArticleListVo);
 
 }

@@ -8,6 +8,8 @@ import com.wangzhe.blog.vo.SelectArticlesVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * <p>
  * 文章表 Mapper 接口
@@ -19,6 +21,13 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface ArticleMapper extends BaseMapper<Article> {
 
-Page<SelectArticleDto> selectArticleListForAdminByCondition(@Param("page") Page<SelectArticleDto> page, @Param("condition")SelectArticlesVo selectArticlesVo);
+    /**
+     * 后台分页条件查询
+     */
+    Page<SelectArticleDto> selectArticleListForAdminByCondition(@Param("page") Page<SelectArticleDto> page, @Param("condition")SelectArticlesVo selectArticlesVo);
 
+    /**
+     * 后台物理删除
+     */
+    void deleteByIdsForPhysics(@Param("ids") List<Integer> ids);
 }

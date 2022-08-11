@@ -32,25 +32,29 @@
 
     </resultMap>
     <select id="selectArticleListForAdminByCondition" resultMap="SelectForAdminMap">
-        select * from article a join article_tag_relation ate on a.id = ate.article_id join category c on a.category_id = c.id
+        select a.id as id,c.category_name as category_name,a.article_title as article_title,a.article_cover as article_cover,a.is_top as is_top,a.create_time as create_time from article a join article_tag_relation ate on a.id = ate.article_id join category c on a.category_id = c.id
         <where>
             <if test="condition.status != null">
-                a.status = #{condition.status}
+                and a.status = #{condition.status}
             </if>
             <if test="condition.deleted != null">
-                a.deleted = #{condition.deleted}
+                and a.deleted = #{condition.deleted}
             </if>
             <if test="condition.tagId != null">
-                ate.tag_id = #{tagId}
+                and ate.tag_id = #{tagId}
             </if>
             <if test="condition.categoryId != null">
-                c.category_name = #{categoryId}
+                and a.categoryId = #{categoryId}
             </if>
             <if test="condition.articleTitle != null">
-                a.category_title like concat(concat('%',#{condition.articleTitle}),'%')
+                and a.article_title like concat(concat('%',#{condition.articleTitle}),'%')
             </if>
-
         </where>
     </select>
+
+    <delete id="deleteByIdsForPhysics">
+
+    </delete>
+
 
 </mapper>

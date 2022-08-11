@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wangzhe.blog.common.result.Result;
 import com.wangzhe.blog.dto.SelectArticleDto;
 import com.wangzhe.blog.service.ArticleService;
+import com.wangzhe.blog.vo.DeleteArticleListVo;
 import com.wangzhe.blog.vo.SaveArticleVo;
 import com.wangzhe.blog.vo.SelectArticlesVo;
 import io.swagger.annotations.Api;
@@ -11,6 +12,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -38,6 +41,14 @@ public class ArticleController {
     public Result<?> selectArticles(@Validated SelectArticlesVo selectArticlesVo) {
         Page<SelectArticleDto> selectArticleDtoPage = articleService.selectArticlesAdmin(selectArticlesVo);
         return Result.ok(selectArticleDtoPage);
+    }
+
+    @ApiOperation("后台删除文章")
+    @DeleteMapping("/admin/articles")
+    public Result<?> deleteArticleList(@Validated DeleteArticleListVo deleteArticleListVo) {
+
+
+        return Result.ok();
     }
 
 }

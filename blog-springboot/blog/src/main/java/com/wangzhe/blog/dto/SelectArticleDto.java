@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,7 +19,6 @@ import java.util.List;
  */
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class SelectArticleDto {
 
@@ -26,9 +26,10 @@ public class SelectArticleDto {
     private Integer id;
 
     @ApiModelProperty("分类名称")
-    private Integer categoryName;
+    private String categoryName;
 
     @ApiModelProperty("文章标题")
+    @NotBlank
     private String articleTitle;
 
     @ApiModelProperty("文章缩略图")
