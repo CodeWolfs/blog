@@ -7,6 +7,7 @@ import com.wangzhe.blog.service.ArticleService;
 import com.wangzhe.blog.vo.DeleteArticleListVo;
 import com.wangzhe.blog.vo.SaveArticleVo;
 import com.wangzhe.blog.vo.SelectArticlesVo;
+import com.wangzhe.blog.vo.UpdateArticleVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,12 @@ public class ArticleController {
     @DeleteMapping("/admin/articles")
     public Result<?> deleteArticleList(@Validated DeleteArticleListVo deleteArticleListVo) {
         articleService.deleteArticleList(deleteArticleListVo);
+        return Result.ok();
+    }
+    @ApiOperation("后台更新文章")
+    @PostMapping("/admin/article")
+    public Result<?> updateArticle(@Validated @RequestBody UpdateArticleVo updateArticleVo) {
+
         return Result.ok();
     }
 
