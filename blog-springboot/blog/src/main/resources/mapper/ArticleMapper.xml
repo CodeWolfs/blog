@@ -4,35 +4,38 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.wangzhe.blog.entity.Article">
-        <id column="id" property="id" />
-        <result column="user_id" property="userId" />
-        <result column="category_id" property="categoryId" />
-        <result column="article_title" property="articleTitle" />
-        <result column="article_cover" property="articleCover" />
-        <result column="article_content" property="articleContent" />
-        <result column="article_type" property="articleType" />
-        <result column="origin_url" property="originUrl" />
-        <result column="is_top" property="isTop" />
-        <result column="status" property="status" />
-        <result column="deleted" property="deleted" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="category_id" property="categoryId"/>
+        <result column="article_title" property="articleTitle"/>
+        <result column="article_cover" property="articleCover"/>
+        <result column="article_content" property="articleContent"/>
+        <result column="article_type" property="articleType"/>
+        <result column="origin_url" property="originUrl"/>
+        <result column="is_top" property="isTop"/>
+        <result column="status" property="status"/>
+        <result column="deleted" property="deleted"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
     </resultMap>
 
 
     <resultMap id="SelectForAdminMap" type="com.wangzhe.blog.dto.SelectArticleDto">
-        <id column="id" property="id" />
-        <result column="category_name" property="categoryName" />
-        <result column="article_title" property="articleTitle" />
-        <result column="article_cover" property="articleCover" />
-        <result column="is_top" property="isTop" />
-        <result column="create_time" property="createTime" />
-        <collection property="tagNameList" javaType="java.util.List" ofType="String" select="com.wangzhe.blog.mapper.TagMapper.selectTagNameByArticleId" column="{articleId=id}">
+        <id column="id" property="id"/>
+        <result column="category_name" property="categoryName"/>
+        <result column="article_title" property="articleTitle"/>
+        <result column="article_cover" property="articleCover"/>
+        <result column="is_top" property="isTop"/>
+        <result column="create_time" property="createTime"/>
+        <collection property="tagNameList" javaType="java.util.List" ofType="String"
+                    select="com.wangzhe.blog.mapper.TagMapper.selectTagNameByArticleId" column="{articleId=id}">
         </collection>
 
     </resultMap>
     <select id="selectArticleListForAdminByCondition" resultMap="SelectForAdminMap">
-        select a.id as id,c.category_name as category_name,a.article_title as article_title,a.article_cover as article_cover,a.is_top as is_top,a.create_time as create_time from article a join article_tag_relation ate on a.id = ate.article_id join category c on a.category_id = c.id
+        select a.id as id,c.category_name as category_name,a.article_title as article_title,a.article_cover as
+        article_cover,a.is_top as is_top,a.create_time as create_time from article a join article_tag_relation ate on
+        a.id = ate.article_id join category c on a.category_id = c.id
         <where>
             <if test="condition.status != null">
                 and a.status = #{condition.status}
@@ -44,7 +47,7 @@
                 and ate.tag_id = #{tagId}
             </if>
             <if test="condition.categoryId != null">
-                and a.categoryId = #{categoryId}
+                and a.category_id = #{categoryId}
             </if>
             <if test="condition.articleTitle != null">
                 and a.article_title like concat(concat('%',#{condition.articleTitle}),'%')
@@ -53,6 +56,12 @@
     </select>
 
     <delete id="deleteByIdsForPhysics">
+        delete from article
+        where
+        id in
+        <foreach collection="ids" item="value" separator="," open="(" close=")">
+            #{value}
+        </foreach>
 
     </delete>
 

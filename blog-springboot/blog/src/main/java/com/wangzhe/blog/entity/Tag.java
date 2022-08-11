@@ -37,11 +37,4 @@ public class Tag implements Serializable {
     @ApiModelProperty("创建时间")
     @TableField(value = "create_time",fill = FieldFill.INSERT)
     private LocalDateTime createTime;
-
-    @ApiModelProperty("更新时间")
-    @TableField(value = "update_time",fill = FieldFill.UPDATE)
-    private LocalDateTime updateTime;
-
-
-
 }

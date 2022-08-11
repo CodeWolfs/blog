@@ -46,8 +46,7 @@ public class ArticleController {
     @ApiOperation("后台删除文章")
     @DeleteMapping("/admin/articles")
     public Result<?> deleteArticleList(@Validated DeleteArticleListVo deleteArticleListVo) {
-
-
+        articleService.deleteArticleList(deleteArticleListVo);
         return Result.ok();
     }
 

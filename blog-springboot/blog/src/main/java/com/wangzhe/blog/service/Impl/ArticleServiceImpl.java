@@ -140,8 +140,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             this.removeBatchByIds(deleteArticleListVo.getArticleIdList());
         } else if(deleteArticleListVo.getDeleted().equals("1")) {
             //物理删除
-            articleMapper.deleteBatchIds(deleteArticleListVo.getArticleIdList());
-
+            articleMapper.deleteByIdsForPhysics(deleteArticleListVo.getArticleIdList());
         } else {
             throw new BizException(ResultCode.VALID_ERROR);
         }
