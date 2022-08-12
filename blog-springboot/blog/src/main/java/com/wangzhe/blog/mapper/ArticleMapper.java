@@ -1,6 +1,7 @@
 package com.wangzhe.blog.mapper;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.wangzhe.blog.dto.ArticleDetailDto;
 import com.wangzhe.blog.dto.SelectArticleDto;
 import com.wangzhe.blog.entity.Article;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -30,4 +31,6 @@ public interface ArticleMapper extends BaseMapper<Article> {
      * 后台物理删除
      */
     void deleteByIdsForPhysics(@Param("ids") List<Integer> ids);
+
+    ArticleDetailDto selectArticleByPrimaryKey(@Param("id") Integer id);
 }

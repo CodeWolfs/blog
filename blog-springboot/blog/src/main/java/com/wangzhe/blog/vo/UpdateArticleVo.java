@@ -4,12 +4,14 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.models.auth.In;
+import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+@Data
 @ApiModel("更新文章参数实体")
 public class UpdateArticleVo {
     @ApiModelProperty(value = "文章id", required = true)

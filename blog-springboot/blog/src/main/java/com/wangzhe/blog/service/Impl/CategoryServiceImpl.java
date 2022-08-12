@@ -1,12 +1,22 @@
 package com.wangzhe.blog.service.Impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.wangzhe.blog.entity.Article;
 import com.wangzhe.blog.entity.Category;
+import com.wangzhe.blog.mapper.ArticleMapper;
 import com.wangzhe.blog.mapper.CategoryMapper;
 import com.wangzhe.blog.service.CategoryService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.wangzhe.blog.vo.SelectCategoryVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -21,18 +31,42 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     @Autowired
     private CategoryMapper categoryMapper;
 
+    @Autowired
+    private ArticleMapper articleMapper;
     @Override
     public Integer saveCategory(String categoryName) {
         LambdaQueryWrapper<Category> categoryLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        categoryLambdaQueryWrapper.eq(Category::getCategoryName,categoryName);
+        categoryLambdaQueryWrapper.eq(Category::getCategoryName, categoryName);
         Category one = getOne(categoryLambdaQueryWrapper);
-        if(one == null) {
+        if (one == null) {
             Category category = new Category();
             category.setCategoryName(categoryName);
             this.save(category);
             return category.getId();
         } else {
             return one.getId();
+        }
+    }
+
+    @Override
+    public Page<Category> selectCategory(SelectCategoryVo selectCategoryVo) {
+        Page<Category> categoryPage = new Page<>(selectCategoryVo.getPageNum(), selectCategoryVo.getPageSize());
+        LambdaQueryWrapper<Category> categoryLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        if (BeanUtil.isNotEmpty(selectCategoryVo.getCategoryName())) {
+            categoryLambdaQueryWrapper.like(Category::getCategoryName, selectCategoryVo.getCategoryName());
+        }
+        categoryLambdaQueryWrapper.orderByDesc(Category::getCreateTime);
+        categoryPage = categoryMapper.selectPage(categoryPage, categoryLambdaQueryWrapper);
+        return categoryPage;
+    }
+
+    @Override
+    public void deleteCategories(List<Integer> categoryIds) {
+        LambdaQueryWrapper<Article> articleLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        articleLambdaQueryWrapper.in(Article::getCategoryId,categoryIds);
+        List<Article> articles = articleMapper.selectList(articleLambdaQueryWrapper);
+        if (BeanUtil.isNotEmpty(articles)){
+            List<Integer> usedCategoryList = articles.stream().map(Article::getCategoryId).collect(Collectors.toList());
         }
     }
 }

@@ -2,6 +2,7 @@ package com.wangzhe.blog.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wangzhe.blog.common.result.Result;
+import com.wangzhe.blog.dto.ArticleDetailDto;
 import com.wangzhe.blog.dto.SelectArticleDto;
 import com.wangzhe.blog.service.ArticleService;
 import com.wangzhe.blog.vo.DeleteArticleListVo;
@@ -9,11 +10,14 @@ import com.wangzhe.blog.vo.SaveArticleVo;
 import com.wangzhe.blog.vo.SelectArticlesVo;
 import com.wangzhe.blog.vo.UpdateArticleVo;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -44,6 +48,14 @@ public class ArticleController {
         return Result.ok(selectArticleDtoPage);
     }
 
+    @ApiOperation("文章详情")
+    @ApiImplicitParam(name = "id", value = "文章id", dataTypeClass = Integer.class, paramType = "path",required = true)
+    @GetMapping("/article/{id}")
+    public Result<?> selectArticleByPrimaryKey(@Valid @NotNull(message = "文章id不能为空") @PathVariable("id") Integer id) {
+        ArticleDetailDto articleDetailDto = articleService.selectArticleByPrimaryKey(id);
+        return Result.ok(articleDetailDto);
+    }
+
     @ApiOperation("后台删除文章")
     @DeleteMapping("/admin/articles")
     public Result<?> deleteArticleList(@Validated DeleteArticleListVo deleteArticleListVo) {
@@ -51,9 +63,9 @@ public class ArticleController {
         return Result.ok();
     }
     @ApiOperation("后台更新文章")
-    @PostMapping("/admin/article")
+    @PutMapping("/admin/article")
     public Result<?> updateArticle(@Validated @RequestBody UpdateArticleVo updateArticleVo) {
-
+        articleService.updateArticleAdmin(updateArticleVo);
         return Result.ok();
     }
 

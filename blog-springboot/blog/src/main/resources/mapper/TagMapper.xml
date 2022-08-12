@@ -4,14 +4,23 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.wangzhe.blog.entity.Tag">
-        <id column="id" property="id" />
-        <result column="tag_name" property="tagName" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
+        <id column="id" property="id"/>
+        <result column="tag_name" property="tagName"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
     </resultMap>
     <select id="selectTagNameByArticleId" resultType="java.lang.String">
-        select t.tag_name from article_tag_relation atr join tag t on atr.tag_id = t.id
+        select t.tag_name
+        from article_tag_relation atr
+                 join tag t on atr.tag_id = t.id
         where atr.article_id = #{articleId}
+    </select>
+
+    <select id="selectTagByArticleId" resultMap="BaseResultMap">
+        select b.*
+        from article_tag_relation a
+                 join tag b on a.tag_id = b.id
+        where a.article_id = #{articleId}
     </select>
 
 </mapper>

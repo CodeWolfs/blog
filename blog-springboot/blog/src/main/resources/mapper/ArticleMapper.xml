@@ -30,8 +30,26 @@
         <collection property="tagNameList" javaType="java.util.List" ofType="String"
                     select="com.wangzhe.blog.mapper.TagMapper.selectTagNameByArticleId" column="{articleId=id}">
         </collection>
-
     </resultMap>
+    <resultMap id="ArticleDetailMap" type="com.wangzhe.blog.dto.ArticleDetailDto">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="article_title" property="articleTitle"/>
+        <result column="article_cover" property="articleCover"/>
+        <result column="article_content" property="articleContent"/>
+        <result column="article_type" property="articleType"/>
+        <result column="origin_url" property="originUrl"/>
+        <result column="is_top" property="isTop"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <association property="category" javaType="com.wangzhe.blog.entity.Category" select="com.wangzhe.blog.mapper.CategoryMapper.selectCategoryById" column="{categoryId=category_id}">
+        </association>
+        <collection property="tagList" javaType="java.util.List" ofType="com.wangzhe.blog.entity.Tag"
+                    select="com.wangzhe.blog.mapper.TagMapper.selectTagByArticleId" column="{articleId=id}">
+        </collection>
+    </resultMap>
+
     <select id="selectArticleListForAdminByCondition" resultMap="SelectForAdminMap">
         select a.id as id,c.category_name as category_name,a.article_title as article_title,a.article_cover as
         article_cover,a.is_top as is_top,a.create_time as create_time from article a join article_tag_relation ate on
@@ -53,6 +71,10 @@
                 and a.article_title like concat(concat('%',#{condition.articleTitle}),'%')
             </if>
         </where>
+    </select>
+    <select id="selectArticleByPrimaryKey" resultMap="ArticleDetailMap">
+        select * from article where id = #{id};
+
     </select>
 
     <delete id="deleteByIdsForPhysics">

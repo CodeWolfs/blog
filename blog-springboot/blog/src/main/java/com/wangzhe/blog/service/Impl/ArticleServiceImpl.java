@@ -6,13 +6,11 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wangzhe.blog.common.result.ResultCode;
+import com.wangzhe.blog.dto.ArticleDetailDto;
 import com.wangzhe.blog.dto.SelectArticleDto;
 import com.wangzhe.blog.entity.*;
 import com.wangzhe.blog.exception.BizException;
-import com.wangzhe.blog.mapper.ArticleMapper;
-import com.wangzhe.blog.mapper.ArticleTagRelationMapper;
-import com.wangzhe.blog.mapper.CategoryMapper;
-import com.wangzhe.blog.mapper.TagMapper;
+import com.wangzhe.blog.mapper.*;
 import com.wangzhe.blog.service.ArticleService;
 import com.wangzhe.blog.service.ArticleTagRelationService;
 import com.wangzhe.blog.service.CategoryService;
@@ -21,6 +19,7 @@ import com.wangzhe.blog.utils.SecurityUtil;
 import com.wangzhe.blog.vo.DeleteArticleListVo;
 import com.wangzhe.blog.vo.SaveArticleVo;
 import com.wangzhe.blog.vo.SelectArticlesVo;
+import com.wangzhe.blog.vo.UpdateArticleVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,6 +56,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     private TagMapper tagMapper;
     @Autowired
     private TagService tagService;
+
+    @Autowired
+    private UserInfoMapper userInfoMapper;
 
 
     @Transactional(rollbackFor = Exception.class)
@@ -138,11 +140,44 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         if (deleteArticleListVo.getDeleted().equals("0")) {
             //逻辑删除
             this.removeBatchByIds(deleteArticleListVo.getArticleIdList());
-        } else if(deleteArticleListVo.getDeleted().equals("1")) {
+        } else if (deleteArticleListVo.getDeleted().equals("1")) {
             //物理删除
             articleMapper.deleteByIdsForPhysics(deleteArticleListVo.getArticleIdList());
         } else {
             throw new BizException(ResultCode.VALID_ERROR);
         }
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void updateArticleAdmin(UpdateArticleVo updateArticleVo) {
+        Article article = new Article();
+        BeanUtil.copyProperties(updateArticleVo, article);
+        Category category = this.categoryHandler(updateArticleVo.getCategoryName());
+        article.setCategoryId(category.getId());
+        //保存
+        this.updateById(article);
+        //处理tag
+        List<Integer> tagIdList = this.tagHandler(updateArticleVo.getTagList());
+        //保存之前删除关联表
+        LambdaQueryWrapper<ArticleTagRelation> articleTagRelationLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        articleTagRelationLambdaQueryWrapper.eq(ArticleTagRelation::getArticleId, article.getId());
+        articleTagRelationService.remove(articleTagRelationLambdaQueryWrapper);
+        //保存标签
+        List<ArticleTagRelation> collect = tagIdList.stream().map(tagId -> {
+            ArticleTagRelation articleTagRelation = new ArticleTagRelation();
+            articleTagRelation.setTagId(tagId);
+            articleTagRelation.setArticleId(article.getId());
+            return articleTagRelation;
+        }).collect(Collectors.toList());
+        articleTagRelationService.saveBatch(collect);
+    }
+
+    @Override
+    public ArticleDetailDto selectArticleByPrimaryKey(Integer id) {
+        ArticleDetailDto articleDetailDto = articleMapper.selectArticleByPrimaryKey(id);
+        UserInfo userInfo = userInfoMapper.selectById(articleDetailDto.getUserId());
+        articleDetailDto.setAuthorName(userInfo.getNickname());
+        return articleDetailDto;
     }
 }

@@ -10,4 +10,8 @@
         <result column="update_time" property="updateTime" />
     </resultMap>
 
+    <select id="selectCategoryById" resultType="com.wangzhe.blog.entity.Category">
+        select * from category where id = #{categoryId};
+    </select>
+
 </mapper>
