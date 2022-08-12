@@ -11,7 +11,7 @@
  Target Server Version : 80027
  File Encoding         : 65001
 
- Date: 11/08/2022 20:06:04
+ Date: 12/08/2022 17:24:42
 */
 
 SET NAMES utf8mb4;
@@ -36,13 +36,13 @@ CREATE TABLE `article`  (
   `create_time` datetime(0) NOT NULL COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of article
 -- ----------------------------
-INSERT INTO `article` VALUES (0000000005, 2, 5, '测试123', '测试123', '测试123', '1', '', '1', '1', '0', '2022-08-11 15:09:46', NULL);
-INSERT INTO `article` VALUES (0000000006, 2, 5, '测试123', '测试123', '测试123', '1', '', '1', '1', '0', '2022-08-11 15:09:46', NULL);
+INSERT INTO `article` VALUES (0000000005, 2, 6, '表白哦', '123', '三卧六七', '1', '', '0', '1', '0', '2022-08-11 15:09:46', '2022-08-12 10:16:52');
+INSERT INTO `article` VALUES (0000000006, 2, 6, '表白哦', '123', '三卧六七', '1', '', '0', '1', '0', '2022-08-11 15:09:46', '2022-08-12 16:22:28');
 INSERT INTO `article` VALUES (0000000007, 2, 5, '测试123', '测试123', '测试123', '1', '', '1', '1', '0', '2022-08-11 15:09:47', NULL);
 
 -- ----------------------------
@@ -55,16 +55,17 @@ CREATE TABLE `article_tag_relation`  (
   `tag_id` int(0) NOT NULL COMMENT '标签id',
   `create_time` datetime(0) NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of article_tag_relation
 -- ----------------------------
 INSERT INTO `article_tag_relation` VALUES (1, 3, 3, '2022-08-11 15:09:07');
 INSERT INTO `article_tag_relation` VALUES (2, 4, 3, '2022-08-11 15:09:45');
-INSERT INTO `article_tag_relation` VALUES (3, 5, 3, '2022-08-11 15:09:46');
-INSERT INTO `article_tag_relation` VALUES (4, 6, 3, '2022-08-11 15:09:47');
 INSERT INTO `article_tag_relation` VALUES (5, 7, 3, '2022-08-11 15:09:47');
+INSERT INTO `article_tag_relation` VALUES (6, 5, 4, '2022-08-12 10:16:52');
+INSERT INTO `article_tag_relation` VALUES (7, 6, 4, '2022-08-12 16:22:28');
+INSERT INTO `article_tag_relation` VALUES (8, 6, 5, '2022-08-12 16:22:28');
 
 -- ----------------------------
 -- Table structure for category
@@ -74,13 +75,15 @@ CREATE TABLE `category`  (
   `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '分类id',
   `category_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '分类名称',
   `create_time` datetime(0) NOT NULL COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of category
 -- ----------------------------
-INSERT INTO `category` VALUES (5, '1', '2022-08-11 15:09:07');
+INSERT INTO `category` VALUES (5, '1', '2022-08-11 15:09:07', NULL);
+INSERT INTO `category` VALUES (6, '分类5', '2022-08-12 10:16:52', NULL);
 
 -- ----------------------------
 -- Table structure for resource
@@ -151,13 +154,16 @@ CREATE TABLE `tag`  (
   `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '标签id',
   `tag_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '标签名',
   `create_time` datetime(0) NOT NULL COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tag
 -- ----------------------------
-INSERT INTO `tag` VALUES (3, '1', '2022-08-11 15:09:07');
+INSERT INTO `tag` VALUES (3, '1', '2022-08-11 15:09:07', NULL);
+INSERT INTO `tag` VALUES (4, '标签散散', '2022-08-12 10:16:52', NULL);
+INSERT INTO `tag` VALUES (5, '标签2323', '2022-08-12 16:22:28', NULL);
 
 -- ----------------------------
 -- Table structure for user_auth
