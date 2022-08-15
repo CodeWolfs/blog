@@ -51,6 +51,10 @@ public class Result<T> {
     public static <T> Result<T> fail(ResultCode resultCode) {
         return restResult(false, null, resultCode.getCode(), resultCode.getDesc());
     }
+    public static <T> Result<T> fail(ResultCode resultCode,T data) {
+        return restResult(false, data, resultCode.getCode(), resultCode.getDesc());
+    }
+    //todo 添加返回对象的时间转换
 
     public static <T> Result<T> fail(String message) {
         return restResult(false, message);

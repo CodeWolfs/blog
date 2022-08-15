@@ -6,6 +6,7 @@ import com.wangzhe.blog.entity.Category;
 import com.wangzhe.blog.service.CategoryService;
 import com.wangzhe.blog.vo.DeleteArticleListVo;
 import com.wangzhe.blog.vo.SelectCategoryVo;
+import com.wangzhe.blog.vo.UpdateCategoryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -47,14 +50,23 @@ public class CategoryController {
         return Result.ok(byId);
     }
 
-    @ApiOperation("后台删除分裂")
-    @ApiImplicitParam(name = "categoryIds", value = "分类id列表", dataTypeClass = List.class, paramType = "query",required = true)
-    @DeleteMapping("/admin/categories")
-    public Result<?> deleteCategories(@Validated @NotEmpty(message = "至少选中一条") List<Integer> categoryIds) {
-        categoryService.deleteCategories(categoryIds);
-
+    @ApiOperation("更新分类")
+    @PatchMapping("/category")
+    public Result<?> updateCategoryByPrimaryKey(@Validated UpdateCategoryVo updateCategoryVo) {
+        categoryService.updateCategoryByPrimaryKey(updateCategoryVo);
         return Result.ok();
     }
+
+
+    @ApiOperation("后台删除分类")
+    @ApiImplicitParam(name = "categoryIds", value = "分类id列表",allowMultiple = true , dataTypeClass = Integer.class, paramType = "query",required = true)
+    @DeleteMapping("/admin/categories")
+    public Result<?> deleteCategories(@Validated @NotEmpty(message = "至少选中一条") @RequestParam(value = "categoryIds") List<Integer> categoryIds) {
+        return categoryService.deleteCategories(categoryIds);
+    }
+
+    //todo 新增分类，校验分类名是否存在
+
 
 
 

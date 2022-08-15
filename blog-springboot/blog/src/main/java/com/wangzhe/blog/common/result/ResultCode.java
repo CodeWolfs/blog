@@ -79,6 +79,11 @@ public enum ResultCode {
      */
     EMAIL_CODE_NULL(54002,"没有发送验证码或者验证码过期"),
 
+    /**
+     * 分类正在被使用
+     */
+    CATEGORY_USING(55001,"分类正在被使用"),
+
 
     /**
      * 构造结束

@@ -3,19 +3,25 @@ package com.wangzhe.blog.service.Impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.wangzhe.blog.common.result.Result;
+import com.wangzhe.blog.common.result.ResultCode;
 import com.wangzhe.blog.entity.Article;
 import com.wangzhe.blog.entity.Category;
+import com.wangzhe.blog.exception.BizException;
 import com.wangzhe.blog.mapper.ArticleMapper;
 import com.wangzhe.blog.mapper.CategoryMapper;
 import com.wangzhe.blog.service.CategoryService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wangzhe.blog.vo.SelectCategoryVo;
+import com.wangzhe.blog.vo.UpdateCategoryVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -61,12 +67,24 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     }
 
     @Override
-    public void deleteCategories(List<Integer> categoryIds) {
+    public Result<?> deleteCategories(List<Integer> categoryIds) {
         LambdaQueryWrapper<Article> articleLambdaQueryWrapper = new LambdaQueryWrapper<>();
         articleLambdaQueryWrapper.in(Article::getCategoryId,categoryIds);
         List<Article> articles = articleMapper.selectList(articleLambdaQueryWrapper);
         if (BeanUtil.isNotEmpty(articles)){
-            List<Integer> usedCategoryList = articles.stream().map(Article::getCategoryId).collect(Collectors.toList());
+            Set<Integer> collect = articles.stream().map(Article::getCategoryId).collect(Collectors.toSet());
+            List<Category> categories = categoryMapper.selectBatchIds(collect);
+            return Result.fail(ResultCode.CATEGORY_USING,categories);
         }
+        this.removeBatchByIds(categoryIds);
+        return Result.ok();
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void updateCategoryByPrimaryKey(UpdateCategoryVo updateCategoryVo) {
+        Category category = new Category();
+        BeanUtil.copyProperties(updateCategoryVo,category);
+        this.updateById(category);
     }
 }

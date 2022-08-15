@@ -1,9 +1,11 @@
 package com.wangzhe.blog.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.wangzhe.blog.common.result.Result;
 import com.wangzhe.blog.entity.Category;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.wangzhe.blog.vo.SelectCategoryVo;
+import com.wangzhe.blog.vo.UpdateCategoryVo;
 
 import java.util.List;
 
@@ -28,5 +30,13 @@ public interface CategoryService extends IService<Category> {
      **/
     Page<Category> selectCategory(SelectCategoryVo selectCategoryVo);
 
-    void deleteCategories(List<Integer> categoryIds);
+    /**
+     * 删除分类列表通过id列表
+     */
+    Result<?> deleteCategories(List<Integer> categoryIds);
+
+    /**
+     * 通过id更新分类
+     */
+    void updateCategoryByPrimaryKey(UpdateCategoryVo updateCategoryVo);
 }

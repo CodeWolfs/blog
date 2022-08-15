@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @author WangZhe
  * @version 1.0
@@ -17,7 +19,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PagePropertyVo {
     @ApiModelProperty("页数")
+    @NotNull(message = "页数不能为空")
     public Integer pageNum = 1;
     @ApiModelProperty("页大小")
+    @NotNull(message = "页大小不能为空")
     public Integer pageSize = 10;
 }
