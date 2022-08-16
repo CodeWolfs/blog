@@ -1,6 +1,7 @@
 package com.wangzhe.blog.service.Impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wangzhe.blog.common.result.Result;
@@ -75,7 +76,7 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
         LambdaQueryWrapper<ArticleTagRelation> articleTagRelationLambdaQueryWrapper = new LambdaQueryWrapper<>();
         articleTagRelationLambdaQueryWrapper.in(ArticleTagRelation::getTagId,tagIds);
         List<ArticleTagRelation> articleTagRelations = articleTagRelationMapper.selectList(articleTagRelationLambdaQueryWrapper);
-        if (BeanUtil.isNotEmpty(articleTagRelations)){
+        if (CollUtil.isNotEmpty(articleTagRelations)){
             Set<Integer> collect = articleTagRelations.stream().map(ArticleTagRelation::getTagId).collect(Collectors.toSet());
             List<Tag> tagList = tagMapper.selectBatchIds(collect);
             return Result.fail(ResultCode.TAG_USING,tagList);
