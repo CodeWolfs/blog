@@ -83,8 +83,23 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateCategoryByPrimaryKey(UpdateCategoryVo updateCategoryVo) {
+        //todo 判断新的标签名是否存在
         Category category = new Category();
         BeanUtil.copyProperties(updateCategoryVo,category);
         this.updateById(category);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void insertCategory(String categoryName) {
+        LambdaQueryWrapper<Category> categoryLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        categoryLambdaQueryWrapper.eq(Category::getCategoryName,categoryName);
+        Long aLong = categoryMapper.selectCount(categoryLambdaQueryWrapper);
+        if (aLong > 0) {
+            throw new BizException(ResultCode.CATEGORY_EXIST);
+        }
+        Category category = new Category();
+        category.setCategoryName(categoryName);
+        categoryMapper.insert(category);
     }
 }

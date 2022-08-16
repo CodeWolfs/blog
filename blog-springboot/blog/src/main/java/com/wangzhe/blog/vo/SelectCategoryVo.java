@@ -16,6 +16,6 @@ import lombok.EqualsAndHashCode;
 @ApiModel("分类列表查询实体")
 @Data
 public class SelectCategoryVo extends PagePropertyVo{
-    @ApiModelProperty(value = "分类名称",required = true)
+    @ApiModelProperty(value = "分类名称",required = false)
     private String categoryName;
 }

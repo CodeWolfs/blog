@@ -39,4 +39,11 @@ public interface CategoryService extends IService<Category> {
      * 通过id更新分类
      */
     void updateCategoryByPrimaryKey(UpdateCategoryVo updateCategoryVo);
+
+    /***
+     * @author WangZhe
+     * @description 创建分类
+     * @Date 14:12 2022/8/16
+     **/
+    void insertCategory(String categoryName);
 }

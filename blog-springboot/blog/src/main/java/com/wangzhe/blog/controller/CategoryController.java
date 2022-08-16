@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -65,7 +66,13 @@ public class CategoryController {
         return categoryService.deleteCategories(categoryIds);
     }
 
-    //todo 新增分类，校验分类名是否存在
+    @ApiOperation("后台新增分类")
+    @PostMapping("/admin/category")
+    @ApiImplicitParam(name = "categoryName", value = "分类名称", dataTypeClass = String.class, paramType = "body",required = true)
+    public Result<?> insertCategory(@Validated @NotBlank(message = "分类名称不能为空") @RequestBody String categoryName) {
+        categoryService.insertCategory(categoryName);
+        return Result.ok();
+    }
 
 
 
