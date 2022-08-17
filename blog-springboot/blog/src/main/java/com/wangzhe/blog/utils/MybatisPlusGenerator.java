@@ -29,10 +29,11 @@ public class MybatisPlusGenerator {
 //        tableName.add("role");
 //        tableName.add("resource");
 //        tableName.add("role_resource_relation");
-        tableName.add("article");
-        tableName.add("category");
-        tableName.add("tag");
-        tableName.add("article_tag_relation");
+//        tableName.add("article");
+//        tableName.add("category");
+//        tableName.add("tag");
+//        tableName.add("article_tag_relation");
+        tableName.add("comment");
 
         FastAutoGenerator.create(URL, USERNAME, PASSWORD)
                 .globalConfig(builder -> {

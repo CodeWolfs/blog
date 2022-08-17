@@ -11,7 +11,7 @@
  Target Server Version : 80027
  File Encoding         : 65001
 
- Date: 16/08/2022 17:37:50
+ Date: 17/08/2022 18:02:24
 */
 
 SET NAMES utf8mb4;
@@ -22,7 +22,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `article`;
 CREATE TABLE `article`  (
-  `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT '文章id',
+  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '文章id',
   `user_id` int(0) NOT NULL COMMENT '作者用户id',
   `category_id` int(0) NOT NULL COMMENT '分类id',
   `article_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '文章标题',
@@ -36,14 +36,16 @@ CREATE TABLE `article`  (
   `create_time` datetime(0) NOT NULL COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of article
 -- ----------------------------
-INSERT INTO `article` VALUES (0000000005, 2, 6, '表白哦', '123', '三卧六七', '1', '', '0', '1', '0', '2022-08-11 15:09:46', '2022-08-12 10:16:52');
-INSERT INTO `article` VALUES (0000000006, 2, 6, '表白哦', '123', '三卧六七', '1', '', '0', '1', '0', '2022-08-11 15:09:46', '2022-08-12 16:22:28');
-INSERT INTO `article` VALUES (0000000007, 2, 5, '测试123', '测试123', '测试123', '1', '', '1', '1', '0', '2022-08-11 15:09:47', NULL);
+INSERT INTO `article` VALUES (8, 2, 5, '测试123', '测试123', '测试123', '1', '', '1', '1', '0', '2022-08-17 14:17:37', NULL);
+INSERT INTO `article` VALUES (9, 2, 5, '测试123', '测试123', '测试123', '1', '', '1', '1', '0', '2022-08-17 14:17:39', NULL);
+INSERT INTO `article` VALUES (10, 2, 5, '测试123', '测试123', '测试123', '1', '', '1', '1', '0', '2022-08-17 14:17:40', NULL);
+INSERT INTO `article` VALUES (11, 2, 5, '测试123', '测试123', '测试123', '1', '', '1', '1', '0', '2022-08-17 14:17:41', NULL);
+INSERT INTO `article` VALUES (12, 2, 5, '测试123', '测试123', '测试123', '1', '', '1', '1', '0', '2022-08-17 14:20:02', NULL);
 
 -- ----------------------------
 -- Table structure for article_tag_relation
@@ -55,7 +57,7 @@ CREATE TABLE `article_tag_relation`  (
   `tag_id` int(0) NOT NULL COMMENT '标签id',
   `create_time` datetime(0) NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of article_tag_relation
@@ -66,6 +68,11 @@ INSERT INTO `article_tag_relation` VALUES (5, 7, 3, '2022-08-11 15:09:47');
 INSERT INTO `article_tag_relation` VALUES (6, 5, 4, '2022-08-12 10:16:52');
 INSERT INTO `article_tag_relation` VALUES (7, 6, 4, '2022-08-12 16:22:28');
 INSERT INTO `article_tag_relation` VALUES (8, 6, 5, '2022-08-12 16:22:28');
+INSERT INTO `article_tag_relation` VALUES (9, 8, 3, '2022-08-17 14:17:37');
+INSERT INTO `article_tag_relation` VALUES (10, 9, 3, '2022-08-17 14:17:39');
+INSERT INTO `article_tag_relation` VALUES (11, 10, 3, '2022-08-17 14:17:40');
+INSERT INTO `article_tag_relation` VALUES (12, 11, 3, '2022-08-17 14:17:41');
+INSERT INTO `article_tag_relation` VALUES (13, 12, 3, '2022-08-17 14:20:02');
 
 -- ----------------------------
 -- Table structure for category
@@ -77,7 +84,7 @@ CREATE TABLE `category`  (
   `create_time` datetime(0) NOT NULL COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of category
@@ -87,6 +94,32 @@ INSERT INTO `category` VALUES (6, '分类5', '2022-08-12 10:16:52', NULL);
 INSERT INTO `category` VALUES (7, 'categoryName=%E6%B5%8B%E8%AF%95', '2022-08-16 14:35:00', NULL);
 INSERT INTO `category` VALUES (8, '测试', '2022-08-16 14:38:22', NULL);
 INSERT INTO `category` VALUES (9, ' ', '2022-08-16 14:38:48', NULL);
+
+-- ----------------------------
+-- Table structure for comment
+-- ----------------------------
+DROP TABLE IF EXISTS `comment`;
+CREATE TABLE `comment`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '评论id',
+  `user_id` int(0) NOT NULL COMMENT '评论用户Id',
+  `topic_id` int(0) NULL DEFAULT NULL COMMENT '评论主题id',
+  `comment_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '评论内容',
+  `reply_user_id` int(0) NULL DEFAULT NULL COMMENT '回复用户id',
+  `parent_id` int(0) NULL DEFAULT NULL COMMENT '父评论id',
+  `type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '评论类型 1.文章 2.友链 3.说说',
+  `delete` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0' COMMENT '是否删除  0否 1是',
+  `review_status` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '1' COMMENT '是否审核 0待审核，1审核通过，2审核不通过',
+  `create_time` datetime(0) NOT NULL COMMENT '评论时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of comment
+-- ----------------------------
+INSERT INTO `comment` VALUES (1, 2, 8, '测试', NULL, NULL, '1', '0', '1', '2022-08-17 14:18:31', NULL);
+INSERT INTO `comment` VALUES (2, 2, 9, '测试2', 2, 1, '1', '0', '1', '2022-08-17 14:19:33', NULL);
+INSERT INTO `comment` VALUES (3, 2, 10, '测试3', NULL, NULL, '2', '0', '1', '2022-08-17 14:26:27', NULL);
 
 -- ----------------------------
 -- Table structure for resource
@@ -159,7 +192,7 @@ CREATE TABLE `tag`  (
   `create_time` datetime(0) NOT NULL COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tag

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wangzhe.blog.mapper.CommentMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wangzhe.blog.entity.Comment">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="topic_id" property="topicId"/>
+        <result column="comment_content" property="commentContent"/>
+        <result column="reply_user_id" property="replyUserId"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="type" property="type"/>
+        <result column="delete" property="delete"/>
+        <result column="review_status" property="reviewStatus"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+    <select id="selectCommentsForAdmin" resultType="com.wangzhe.blog.dto.CommentForAdminDto">
+        select
+        c.id as id ,ui.avatar as commentAvatar,ui.nickname as commentNickName,
+        case when ri.nickname is null then '无' else ri.nickname end as replyNickName,
+        case when a.article_title is null then '无' else a.article_title end as articleTitle,
+        c.comment_content as commentContent,c.create_time as createTime,c.review_status as reviewStatus,
+        c.type as typeText
+        from comment c left join user_info ui on c.user_id = ui.id
+        left outer join user_info ri on c.reply_user_id = ri.id
+        left join article a on c.topic_id = a.id
+        <where>
+            <if test="condition.reviewStatus != null">
+                and c.review_status = #{condition.reviewStatus}
+            </if>
+            <if test="condition.type != null">
+                and c.type = #{condition.type}
+            </if>
+            <if test="condition.nickname != null">
+                and ui.nickname like concat('%',#{condition.nickname},'%')
+            </if>
+        </where>
+    </select>
+
+</mapper>
