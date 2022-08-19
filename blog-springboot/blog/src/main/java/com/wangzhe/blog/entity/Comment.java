@@ -1,9 +1,7 @@
 package com.wangzhe.blog.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
@@ -56,20 +54,19 @@ public class Comment implements Serializable {
     private String type;
 
     @ApiModelProperty("是否删除  0否 1是")
-    @TableField("delete")
-    private String delete;
+    @TableField("deleted")
+    @TableLogic
+    private String deleted;
 
     @ApiModelProperty("是否审核 0待审核，1审核通过，2审核不通过")
     @TableField("review_status")
     private String reviewStatus;
 
     @ApiModelProperty("评论时间")
-    @TableField("create_time")
+    @TableField(value = "create_time",fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     @ApiModelProperty("更新时间")
-    @TableField("update_time")
+    @TableField(value = "update_time",fill = FieldFill.UPDATE)
     private LocalDateTime updateTime;
-
-
 }

@@ -11,7 +11,7 @@
  Target Server Version : 80027
  File Encoding         : 65001
 
- Date: 17/08/2022 18:02:24
+ Date: 19/08/2022 17:37:18
 */
 
 SET NAMES utf8mb4;
@@ -107,12 +107,12 @@ CREATE TABLE `comment`  (
   `reply_user_id` int(0) NULL DEFAULT NULL COMMENT '回复用户id',
   `parent_id` int(0) NULL DEFAULT NULL COMMENT '父评论id',
   `type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '评论类型 1.文章 2.友链 3.说说',
-  `delete` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0' COMMENT '是否删除  0否 1是',
+  `deleted` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0' COMMENT '是否删除  0否 1是',
   `review_status` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '1' COMMENT '是否审核 0待审核，1审核通过，2审核不通过',
   `create_time` datetime(0) NOT NULL COMMENT '评论时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of comment
@@ -120,6 +120,55 @@ CREATE TABLE `comment`  (
 INSERT INTO `comment` VALUES (1, 2, 8, '测试', NULL, NULL, '1', '0', '1', '2022-08-17 14:18:31', NULL);
 INSERT INTO `comment` VALUES (2, 2, 9, '测试2', 2, 1, '1', '0', '1', '2022-08-17 14:19:33', NULL);
 INSERT INTO `comment` VALUES (3, 2, 10, '测试3', NULL, NULL, '2', '0', '1', '2022-08-17 14:26:27', NULL);
+
+-- ----------------------------
+-- Table structure for menu
+-- ----------------------------
+DROP TABLE IF EXISTS `menu`;
+CREATE TABLE `menu`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '菜单id',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '菜单名称',
+  `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '访问路径',
+  `component` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '组件',
+  `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '图标',
+  `create_time` datetime(0) NOT NULL COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `order_num` int(0) NOT NULL COMMENT '排序',
+  `parent_id` int(0) NULL DEFAULT NULL COMMENT '父容器id',
+  `is_hidden` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0' COMMENT '是否隐藏0否，1是',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of menu
+-- ----------------------------
+INSERT INTO `menu` VALUES (1, '首页', '/', '/app/home.vue', '123', '2022-08-19 16:44:54', NULL, 1, NULL, '0');
+
+-- ----------------------------
+-- Table structure for message
+-- ----------------------------
+DROP TABLE IF EXISTS `message`;
+CREATE TABLE `message`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '头像',
+  `nickname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '用户名',
+  `message_content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '留言内容',
+  `ip_address` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户ip',
+  `ip_source` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户地址',
+  `time` tinyint(1) NULL DEFAULT NULL COMMENT '弹幕速度',
+  `review_status` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '1' COMMENT '审核状态0：待审核1；审核通过3：审核不通过',
+  `create_time` datetime(0) NOT NULL COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
+  `deleted` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0' COMMENT '逻辑删除字段',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of message
+-- ----------------------------
+INSERT INTO `message` VALUES (1, '11', '11', '11', '1', '11', 1, '1', '2022-08-09 16:20:49', '2022-08-19 16:21:58', '1');
+INSERT INTO `message` VALUES (2, '11', '11', '11', '1', '11', 1, '1', '2022-08-09 16:20:49', '2022-08-19 16:21:58', '1');
+INSERT INTO `message` VALUES (3, '11', '11', '11', '1', '11', 1, '1', '2022-08-09 16:20:49', '2022-08-19 16:21:58', '1');
 
 -- ----------------------------
 -- Table structure for resource

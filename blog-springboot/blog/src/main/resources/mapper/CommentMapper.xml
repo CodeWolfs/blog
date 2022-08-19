@@ -11,7 +11,7 @@
         <result column="reply_user_id" property="replyUserId"/>
         <result column="parent_id" property="parentId"/>
         <result column="type" property="type"/>
-        <result column="delete" property="delete"/>
+        <result column="deleted" property="deleted"/>
         <result column="review_status" property="reviewStatus"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>

@@ -6,7 +6,7 @@ import com.wangzhe.blog.dto.CommentForAdminDto;
 import com.wangzhe.blog.service.CommentService;
 import com.wangzhe.blog.vo.DeleteCommentVo;
 import com.wangzhe.blog.vo.SelectCommentsVo;
-import com.wangzhe.blog.vo.UpdateReviewStatusVo;
+import com.wangzhe.blog.vo.UpdateCommentReviewStatusVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class CommentController {
 
     @ApiOperation("后台评论批量审核")
     @PatchMapping("/admin/comments")
-    public Result<?> updateReviewStatus(UpdateReviewStatusVo updateReviewStatusVo) {
+    public Result<?> updateReviewStatus(UpdateCommentReviewStatusVo updateReviewStatusVo) {
         commentService.updateReviewStatus(updateReviewStatusVo);
         return Result.ok();
     }
@@ -45,6 +45,7 @@ public class CommentController {
     @ApiOperation("后台评论批量删除")
     @DeleteMapping("/admin/comments")
     public Result<?> deleteCommentByBatchById(DeleteCommentVo deleteCommentVo) {
+        commentService.deleteCommentBatchById(deleteCommentVo);
         return Result.ok();
     }
 

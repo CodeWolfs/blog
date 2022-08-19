@@ -4,12 +4,14 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wangzhe.blog.dto.CommentForAdminDto;
 import com.wangzhe.blog.entity.Comment;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.wangzhe.blog.vo.DeleteCommentVo;
 import com.wangzhe.blog.vo.SelectCommentsVo;
-import com.wangzhe.blog.vo.UpdateReviewStatusVo;
+import com.wangzhe.blog.vo.UpdateCommentReviewStatusVo;
+
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author wz
@@ -22,5 +24,13 @@ public interface CommentService extends IService<Comment> {
      */
     Page<CommentForAdminDto> selectComments(SelectCommentsVo selectCommentsVo);
 
-    void updateReviewStatus(UpdateReviewStatusVo updateReviewStatusVo);
+    /**
+     * 审核评论
+     */
+    void updateReviewStatus(UpdateCommentReviewStatusVo updateReviewStatusVo);
+
+    /**
+     * 批量删除评论
+     */
+    void deleteCommentBatchById(DeleteCommentVo deleteCommentVo);
 }
