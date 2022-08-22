@@ -11,7 +11,7 @@
  Target Server Version : 80027
  File Encoding         : 65001
 
- Date: 19/08/2022 17:37:18
+ Date: 22/08/2022 17:38:37
 */
 
 SET NAMES utf8mb4;
@@ -137,12 +137,15 @@ CREATE TABLE `menu`  (
   `parent_id` int(0) NULL DEFAULT NULL COMMENT '父容器id',
   `is_hidden` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0' COMMENT '是否隐藏0否，1是',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of menu
 -- ----------------------------
 INSERT INTO `menu` VALUES (1, '首页', '/', '/app/home.vue', '123', '2022-08-19 16:44:54', NULL, 1, NULL, '0');
+INSERT INTO `menu` VALUES (2, '文章管理', '/article-submenu', 'layout', '333', '2022-08-22 08:41:11', NULL, 2, NULL, '0');
+INSERT INTO `menu` VALUES (3, '发布文章', '/articles', '/article/article.vue', '12', '2022-08-22 08:42:37', NULL, 1, 2, '0');
+INSERT INTO `menu` VALUES (4, '修改文章', '/article/*', '/article/Article.vue', '23', '2022-08-22 08:43:54', NULL, 2, 2, '0');
 
 -- ----------------------------
 -- Table structure for message
@@ -161,7 +164,7 @@ CREATE TABLE `message`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   `deleted` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0' COMMENT '逻辑删除字段',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of message
@@ -181,17 +184,17 @@ CREATE TABLE `resource`  (
   `request_method` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '请求方法',
   `parent_id` int(0) NULL DEFAULT NULL COMMENT '父模块id',
   `is_anonymous` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0' COMMENT '是否允许匿名访问0否，1是',
+  `deleted` int(0) NULL DEFAULT 0 COMMENT '逻辑删除 0否1是',
   `create_time` datetime(0) NOT NULL COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
-  `deleted` int(0) NULL DEFAULT 0 COMMENT '逻辑删除',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '资源信息' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of resource
 -- ----------------------------
-INSERT INTO `resource` VALUES (1, '用户管理模块', NULL, NULL, NULL, '0', '2022-08-05 15:42:31', NULL, 0);
-INSERT INTO `resource` VALUES (2, '用户注册', '/blog/userAuth/register', 'post', 1, '0', '2022-08-05 15:43:27', NULL, 0);
+INSERT INTO `resource` VALUES (1, '用户管理模块', NULL, NULL, NULL, '0', 0, '2022-08-05 15:42:31', NULL);
+INSERT INTO `resource` VALUES (2, '用户注册', '/blog/userAuth/register', 'post', 1, '0', 0, '2022-08-05 15:43:27', NULL);
 
 -- ----------------------------
 -- Table structure for role

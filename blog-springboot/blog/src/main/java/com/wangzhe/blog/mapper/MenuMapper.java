@@ -1,6 +1,7 @@
 package com.wangzhe.blog.mapper;
 
 import com.wangzhe.blog.dto.MenuDto;
+import com.wangzhe.blog.dto.MenuItemDto;
 import com.wangzhe.blog.entity.Menu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.wangzhe.blog.vo.SelectMenusVo;
@@ -20,5 +21,8 @@ import java.util.List;
 @Mapper
 public interface MenuMapper extends BaseMapper<Menu> {
 
-    List<MenuDto> selectMenus(@Param("condition") SelectMenusVo selectMenusVo);
+    List<MenuDto> selectMenus();
+
+//    List<MenuDto> selectChildrenMenu(@Param("parentId") Integer parentId);
+    List<MenuItemDto> selectMenusByCondition(@Param("condition") SelectMenusVo selectMenusVo);
 }
