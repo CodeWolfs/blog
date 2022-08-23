@@ -1,8 +1,10 @@
 package com.wangzhe.blog.service;
 
+import com.wangzhe.blog.dto.ResourceItemDto;
 import com.wangzhe.blog.entity.Resource;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.wangzhe.blog.vo.InsertResourceVo;
+import com.wangzhe.blog.vo.SelectResourceVo;
 import com.wangzhe.blog.vo.UpdateResourceVo;
 
 import java.util.List;
@@ -20,7 +22,7 @@ public interface ResourceService extends IService<Resource> {
     /**
      * 后台查询资源列表
      */
-    List<Resource> selectResources();
+    List<ResourceItemDto> selectResources(SelectResourceVo selectResourceVo);
 
     /**
      * 后台添加资源

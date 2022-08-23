@@ -2,11 +2,13 @@ package com.wangzhe.blog.controller;
 
 import com.wangzhe.blog.common.result.Result;
 import com.wangzhe.blog.dto.MenuDto;
+import com.wangzhe.blog.dto.ResourceItemDto;
 import com.wangzhe.blog.entity.Menu;
 import com.wangzhe.blog.entity.Resource;
 import com.wangzhe.blog.service.MenuService;
 import com.wangzhe.blog.service.ResourceService;
 import com.wangzhe.blog.vo.*;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +28,15 @@ import java.util.List;
  * @since 2022-22-04
  */
 @RestController
+@Api(tags = "接口管理")
 public class ResourceController {
     @Autowired
     private ResourceService resourceService;
 
     @ApiOperation("后台查询资源列表")
     @GetMapping("/admin/resources")
-    public Result<List<Resource>> selectResources() {
-        List<Resource> list = resourceService.selectResources();
+    public Result<List<ResourceItemDto>> selectResources(@Validated SelectResourceVo selectResourceVo) {
+        List<ResourceItemDto> list = resourceService.selectResources(selectResourceVo);
         return Result.ok(list);
     }
 
