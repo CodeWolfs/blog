@@ -11,7 +11,7 @@
  Target Server Version : 80027
  File Encoding         : 65001
 
- Date: 22/08/2022 17:38:37
+ Date: 23/08/2022 18:01:47
 */
 
 SET NAMES utf8mb4;
@@ -137,7 +137,7 @@ CREATE TABLE `menu`  (
   `parent_id` int(0) NULL DEFAULT NULL COMMENT '父容器id',
   `is_hidden` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0' COMMENT '是否隐藏0否，1是',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of menu
@@ -188,13 +188,17 @@ CREATE TABLE `resource`  (
   `create_time` datetime(0) NOT NULL COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '资源信息' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '资源信息' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of resource
 -- ----------------------------
 INSERT INTO `resource` VALUES (1, '用户管理模块', NULL, NULL, NULL, '0', 0, '2022-08-05 15:42:31', NULL);
 INSERT INTO `resource` VALUES (2, '用户注册', '/blog/userAuth/register', 'post', 1, '0', 0, '2022-08-05 15:43:27', NULL);
+INSERT INTO `resource` VALUES (3, '分类模块', '', '', NULL, '', 0, '2022-08-23 14:13:06', NULL);
+INSERT INTO `resource` VALUES (4, '菜单模块', NULL, NULL, NULL, '0', 1, '2022-08-23 14:14:25', NULL);
+INSERT INTO `resource` VALUES (5, 'test', '/jslkfd', 'POST', 4, '1', 1, '2022-08-23 14:15:32', '2022-08-23 14:19:11');
+INSERT INTO `resource` VALUES (6, '添加菜单', '/test', 'GET', 4, '0', 1, '2022-08-23 14:19:27', NULL);
 
 -- ----------------------------
 -- Table structure for role
