@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 2022-59-17
  */
 @RestController
-@Api(tags = "后台评论管理")
+@Api(tags = "评论管理")
 public class CommentController {
 
     @Autowired

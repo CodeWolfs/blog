@@ -7,6 +7,7 @@ import com.wangzhe.blog.service.RoleService;
 import com.wangzhe.blog.vo.InsertResourceVo;
 import com.wangzhe.blog.vo.RoleVo;
 import com.wangzhe.blog.vo.SelectRolesVo;
+import com.wangzhe.blog.vo.UpdateRoleVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class RoleController {
 
     @ApiOperation("后台查询角色列表")
     @GetMapping("/admin/roles")
-    public Result<Page<Role>> selectRoles(@Validated @RequestBody SelectRolesVo selectRolesVo) {
+    public Result<Page<Role>> selectRoles(@Validated SelectRolesVo selectRolesVo) {
         Page<Role> list = roleService.selectRoles(selectRolesVo);
         return Result.ok(list);
     }
@@ -40,6 +41,13 @@ public class RoleController {
     @PostMapping("/admin/role")
     public Result<?> insertRole(@Validated @RequestBody RoleVo roleVo) {
         roleService.insertRole(roleVo);
+        return Result.ok();
+    }
+
+    @ApiOperation("后台更新角色")
+    @PatchMapping("/admin/role")
+    public Result<?> updateRole(@Validated @RequestBody UpdateRoleVo updateRoleVo) {
+
         return Result.ok();
     }
 

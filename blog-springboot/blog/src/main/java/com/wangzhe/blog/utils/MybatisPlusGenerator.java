@@ -35,7 +35,8 @@ public class MybatisPlusGenerator {
 //        tableName.add("article_tag_relation");
 //        tableName.add("comment");
 //        tableName.add("message");
-        tableName.add("menu");
+//        tableName.add("menu");
+        tableName.add("role_menu_relation");
 
         FastAutoGenerator.create(URL, USERNAME, PASSWORD)
                 .globalConfig(builder -> {

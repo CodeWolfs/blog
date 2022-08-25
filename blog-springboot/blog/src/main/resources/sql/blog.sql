@@ -11,7 +11,7 @@
  Target Server Version : 80027
  File Encoding         : 65001
 
- Date: 23/08/2022 18:01:47
+ Date: 25/08/2022 17:41:56
 */
 
 SET NAMES utf8mb4;
@@ -219,6 +219,24 @@ CREATE TABLE `role`  (
 -- Records of role
 -- ----------------------------
 INSERT INTO `role` VALUES (1, '管理员', 'admin', '0', '2022-08-05 15:40:57', NULL, 0);
+INSERT INTO `role` VALUES (2, '用户', 'user', '0', '2022-08-25 10:45:50', NULL, 0);
+INSERT INTO `role` VALUES (3, '普通用户', 'normal-user', '0', '2022-08-25 11:24:54', NULL, 0);
+
+-- ----------------------------
+-- Table structure for role_menu_relation
+-- ----------------------------
+DROP TABLE IF EXISTS `role_menu_relation`;
+CREATE TABLE `role_menu_relation`  (
+  `id` int(0) NOT NULL COMMENT '角色菜单关联id',
+  `role_id` int(0) NOT NULL COMMENT '角色id',
+  `menu_id` int(0) NOT NULL COMMENT '菜单id',
+  `create_time` datetime(0) NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of role_menu_relation
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for role_resource_relation
