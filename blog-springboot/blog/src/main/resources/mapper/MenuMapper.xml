@@ -28,6 +28,15 @@
                     select="com.wangzhe.blog.mapper.MenuMapper.selectChildrenMenu" column="{parentId=id}">
         </collection>
     </resultMap>
+
+    <resultMap id="selectRoleMenuResultMap" type="com.wangzhe.blog.dto.RoleMenuDto">
+        <id column="id" property="id"/>
+        <result column="name" property="label"/>
+        <collection property="children" javaType="List" ofType="com.wangzhe.blog.dto.RoleMenuDto"
+                    select="com.wangzhe.blog.mapper.MenuMapper.selectRoleMenuChildren" column="{parentId=id}">
+        </collection>
+    </resultMap>
+
     <select id="selectMenus" resultMap="SelectMenusResultMap">
         select *
         from menu
@@ -43,6 +52,19 @@
     </select>
     <select id="selectMenusByCondition" resultType="com.wangzhe.blog.dto.MenuItemDto">
 
+    </select>
+    <select id="selectRoleMenu" resultMap="selectRoleMenuResultMap">
+        select *
+        from menu
+        where parent_id is null
+        order by order_num;
+    </select>
+
+    <select id="selectRoleMenuChildren" resultMap="selectRoleMenuResultMap">
+        select *
+        from menu
+        where parent_id = #{parentId}
+        order by order_num;
     </select>
 
 

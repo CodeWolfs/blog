@@ -1,4 +1,4 @@
-package com.wangzhe.blog.vo;
+package com.wangzhe.blog.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -11,25 +11,22 @@ import java.util.List;
 /**
  * @author WangZhe
  * @version 1.0
- * @className UpdateRoleVo
- * @description 更新角色入参实体
- * @date 2022/8/25 11:07
+ * @className RoleDto
+ * @description 角色返参实体
+ * @date 2022/8/26 16:35
  */
 
 @Data
-@ApiModel("更新角色入参实体")
-public class UpdateRoleVo {
+@ApiModel("角色返参实体")
+public class RoleDto {
 
     @ApiModelProperty(value = "角色id", required = true)
-    @NotNull(message = "角色id不能为空")
     private Integer id;
 
     @ApiModelProperty(value = "角色名称")
-    @NotBlank(message = "角色名称不能为空")
     private String roleName;
 
     @ApiModelProperty(value = "角色标签")
-    @NotBlank(message = "角色标签不能为空")
     private String roleLabel;
 
     @ApiModelProperty(value = "是否禁用")
@@ -40,5 +37,4 @@ public class UpdateRoleVo {
 
     @ApiModelProperty(value = "资源id列表")
     private List<Integer> resourceIdList;
-
 }

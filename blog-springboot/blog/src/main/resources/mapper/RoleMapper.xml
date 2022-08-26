@@ -4,13 +4,32 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.wangzhe.blog.entity.Role">
-        <id column="id" property="id" />
-        <result column="role_name" property="roleName" />
-        <result column="role_label" property="roleLabel" />
-        <result column="is_disable" property="isDisable" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
-        <result column="deleted" property="deleted" />
+        <id column="id" property="id"/>
+        <result column="role_name" property="roleName"/>
+        <result column="role_label" property="roleLabel"/>
+        <result column="is_disable" property="isDisable"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="deleted" property="deleted"/>
     </resultMap>
+    <resultMap id="selectRoleByIdResultMap" type="com.wangzhe.blog.dto.RoleDto">
+        <id column="id" property="id"/>
+        <result column="role_name" property="roleName"/>
+        <result column="role_label" property="roleLabel"/>
+        <result column="is_disable" property="isDisable"/>
+        <collection property="menuIdList" javaType="java.util.List" ofType="integer"
+                    select="com.wangzhe.blog.mapper.RoleMenuRelationMapper.selectByRoleId" column="{roleId = id}">
+        </collection>
+        <collection property="resourceIdList" javaType="java.util.List" ofType="integer"
+                    select="com.wangzhe.blog.mapper.RoleResourceRelationMapper.selectResourceIdByRoleId"
+                    column="{roleId = id}">
+        </collection>
+    </resultMap>
+
+    <select id="selectRoleById" resultMap="selectRoleByIdResultMap">
+        select *
+        from role
+        where id = #{roleId}
+    </select>
 
 </mapper>

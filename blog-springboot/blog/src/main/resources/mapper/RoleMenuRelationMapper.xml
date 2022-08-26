@@ -4,10 +4,16 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.wangzhe.blog.entity.RoleMenuRelation">
-        <id column="id" property="id" />
-        <result column="role_id" property="roleId" />
-        <result column="menu_id" property="menuId" />
-        <result column="create_time" property="createTime" />
+        <id column="id" property="id"/>
+        <result column="role_id" property="roleId"/>
+        <result column="menu_id" property="menuId"/>
+        <result column="create_time" property="createTime"/>
     </resultMap>
+    <select id="selectByRoleId" resultType="java.lang.Integer">
+        select menu_id
+        from role_menu_relation
+        where role_id = #{roleId};
+    </select>
+
 
 </mapper>
