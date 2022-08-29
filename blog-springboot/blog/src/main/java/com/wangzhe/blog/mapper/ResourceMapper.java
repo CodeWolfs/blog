@@ -1,6 +1,7 @@
 package com.wangzhe.blog.mapper;
 
 import com.wangzhe.blog.dto.ResourceItemDto;
+import com.wangzhe.blog.dto.RoleResourceDto;
 import com.wangzhe.blog.entity.Resource;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
@@ -22,4 +23,6 @@ public interface ResourceMapper extends BaseMapper<Resource> {
     List<Resource> selectResourceListByUserInfoId(@Param("userInfoId") Integer userInfoId);
 
     List<ResourceItemDto> selectAllResources();
+
+    List<RoleResourceDto> selectRoleResource();
 }

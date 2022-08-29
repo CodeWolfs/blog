@@ -6,20 +6,25 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wangzhe.blog.dto.RoleDto;
 import com.wangzhe.blog.dto.RoleMenuDto;
+import com.wangzhe.blog.dto.RoleResourceDto;
 import com.wangzhe.blog.entity.Role;
 import com.wangzhe.blog.entity.RoleMenuRelation;
 import com.wangzhe.blog.entity.RoleResourceRelation;
+import com.wangzhe.blog.entity.UserRoleRelation;
 import com.wangzhe.blog.exception.BizException;
 import com.wangzhe.blog.mapper.MenuMapper;
+import com.wangzhe.blog.mapper.ResourceMapper;
 import com.wangzhe.blog.mapper.RoleMapper;
+import com.wangzhe.blog.security.SecurityMetadataSourceImpl;
 import com.wangzhe.blog.service.RoleMenuRelationService;
 import com.wangzhe.blog.service.RoleResourceRelationService;
 import com.wangzhe.blog.service.RoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.wangzhe.blog.service.UserRoleRelationService;
+import com.wangzhe.blog.vo.DeleteRolesVo;
 import com.wangzhe.blog.vo.RoleVo;
 import com.wangzhe.blog.vo.SelectRolesVo;
 import com.wangzhe.blog.vo.UpdateRoleVo;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,6 +54,15 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 
     @Autowired
     private MenuMapper menuMapper;
+
+    @Autowired
+    private ResourceMapper resourceMapper;
+
+    @Autowired
+    private SecurityMetadataSourceImpl securityMetadataSource;
+
+    @Autowired
+    private UserRoleRelationService userRoleRelationService;
 
     @Override
     public Page<Role> selectRoles(SelectRolesVo selectRolesVo) {
@@ -82,6 +96,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         this.save(role);
         //处理菜单 和资源
         this.insertMenuAndResourceForRoleId(role.getId(),roleVo.getMenuIdList(),roleVo.getResourceIdList());
+        //系统权限重新加载资源
+        securityMetadataSource.clearDataSource();
+
 
     }
 
@@ -107,6 +124,8 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         //更新 菜单和资源列表，先清空
         this.clearMenuAndResourceByRoleId(byId.getId());
         this.insertMenuAndResourceForRoleId(updateRoleVo.getId(),updateRoleVo.getMenuIdList(),updateRoleVo.getResourceIdList());
+        //系统权限重新加载资源
+        securityMetadataSource.clearDataSource();
     }
 
     /**
@@ -169,7 +188,27 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 
     @Override
     public List<RoleMenuDto> selectRoleMenu() {
-        List<RoleMenuDto> roleMenuDtoList = menuMapper.selectRoleMenu();
-        return null;
+        return menuMapper.selectRoleMenu();
+    }
+
+    @Override
+    public List<RoleResourceDto> selectRoleResource() {
+        return resourceMapper.selectRoleResource();
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void deleteRoles(DeleteRolesVo deleteRolesVo) {
+        LambdaQueryWrapper<UserRoleRelation> userRoleRelationLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        userRoleRelationLambdaQueryWrapper.in(UserRoleRelation::getRoleId,deleteRolesVo.getRoleIdList());
+        long count = userRoleRelationService.count(userRoleRelationLambdaQueryWrapper);
+        if(count > 0) {
+            throw new BizException("角色下有用户在使用");
+        }
+        this.removeBatchByIds(deleteRolesVo.getRoleIdList());
+        //系统权限重新加载资源
+        securityMetadataSource.clearDataSource();
     }
 }
+
+

@@ -4,15 +4,48 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.wangzhe.blog.entity.UserInfo">
-        <id column="id" property="id" />
-        <result column="nickname" property="nickname" />
-        <result column="avatar" property="avatar" />
-        <result column="intro" property="intro" />
-        <result column="website" property="website" />
-        <result column="is_disabled" property="isDisabled" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
-        <result column="deleted" property="deleted" />
+        <id column="id" property="id"/>
+        <result column="nickname" property="nickname"/>
+        <result column="avatar" property="avatar"/>
+        <result column="intro" property="intro"/>
+        <result column="website" property="website"/>
+        <result column="is_disabled" property="isDisabled"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="deleted" property="deleted"/>
     </resultMap>
+    <resultMap id="selectUsersResultMap" type="com.wangzhe.blog.dto.SelectUsersDto">
+        <id column="id" property="userInfoId"/>
+        <result column="nickname" property="nickName"/>
+        <result column="avatar" property="avatar"/>
+        <result column="login_type" property="loginType"/>
+        <result column="is_disabled" property="isDisabled"/>
+        <result column="ip_address" property="ipAddress"/>
+        <result column="ip_source" property="ipSource"/>
+        <result column="create_time" property="createTime"/>
+        <result column="last_login_time" property="lastLoginTime"/>
+        <collection property="roleList" javaType="List" ofType="com.wangzhe.blog.dto.UserRoleDto" select="" column="{userInfoId = id}">
+        </collection>
+    </resultMap>
+    <select id="selectUsers" resultMap="selectUsersResultMap">
+        select ui.id ,
+        ui.nickname,
+        ui.avatar,
+        ua.login_type as login_type,
+        ui.is_disabled as is_disabled,
+        ua.ip_address as ip_address,
+        ua.ip_source as ip_source,
+        ua.create_time as create_time,
+        ua.last_login_time as last_login_time
+        from user_auth ua join user_info ui on ua.user_info_id = ui.id
+        <where>
+            <if test="condition.loginType != null">
+                and ua.login_type = #{condition.loginType}
+            </if>
+            <if test="condition.nickName != null">
+                and ui.nickname = #{condition.nickName}
+            </if>
+        </where>
+    </select>
 
 </mapper>

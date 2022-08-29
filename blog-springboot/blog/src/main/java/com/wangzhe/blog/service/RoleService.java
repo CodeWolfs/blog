@@ -3,8 +3,10 @@ package com.wangzhe.blog.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wangzhe.blog.dto.RoleDto;
 import com.wangzhe.blog.dto.RoleMenuDto;
+import com.wangzhe.blog.dto.RoleResourceDto;
 import com.wangzhe.blog.entity.Role;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.wangzhe.blog.vo.DeleteRolesVo;
 import com.wangzhe.blog.vo.RoleVo;
 import com.wangzhe.blog.vo.SelectRolesVo;
 import com.wangzhe.blog.vo.UpdateRoleVo;
@@ -53,4 +55,8 @@ public interface RoleService extends IService<Role> {
      * @return
      */
     List<RoleMenuDto> selectRoleMenu();
+
+    List<RoleResourceDto> selectRoleResource();
+
+    void deleteRoles(DeleteRolesVo deleteRolesVo);
 }

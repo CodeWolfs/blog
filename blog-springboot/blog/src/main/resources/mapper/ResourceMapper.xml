@@ -26,6 +26,14 @@
                     select="com.wangzhe.blog.mapper.ResourceMapper.selectResourceChildren" column="{parentId=id}">
         </collection>
     </resultMap>
+
+    <resultMap id="selectRoleResourceResultMap" type="com.wangzhe.blog.dto.RoleResourceDto">
+        <id column="id" property="id"/>
+        <result column="resource_name" property="label"/>
+        <collection property="children" javaType="List" ofType="com.wangzhe.blog.dto.RoleResourceDto"
+                    select="com.wangzhe.blog.mapper.ResourceMapper.selectRoleResourceChildren" column="{parentId=id}">
+        </collection>
+    </resultMap>
     <select id="selectResourceListByUserInfoId" resultType="com.wangzhe.blog.entity.Resource">
         SELECT re.*
         FROM user_role_relation urr
@@ -44,4 +52,15 @@
         from resource
         where parent_id = #{parentId} and deleted = '0';
     </select>
+    <select id="selectRoleResource" resultMap="selectRoleResourceResultMap">
+        select resource_name
+        from resource
+        where parent_id is null and deleted = '0';
+    </select>
+    <select id="selectRoleResourceChildren" resultMap="selectRoleResourceResultMap">
+        select *
+        from resource
+        where parent_id = #{parentId} and deleted = '0';
+    </select>
+
 </mapper>

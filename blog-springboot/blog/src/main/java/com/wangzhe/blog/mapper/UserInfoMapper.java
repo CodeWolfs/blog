@@ -1,8 +1,12 @@
 package com.wangzhe.blog.mapper;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.wangzhe.blog.dto.SelectUsersDto;
 import com.wangzhe.blog.entity.UserInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.wangzhe.blog.vo.SelectUsersVo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -15,4 +19,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserInfoMapper extends BaseMapper<UserInfo> {
 
+    Page<SelectUsersDto> selectUsers(@Param("page") Page<SelectUsersDto> selectUsersDtoPage, @Param("condition") SelectUsersVo selectUsersVo);
 }

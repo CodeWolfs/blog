@@ -4,12 +4,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wangzhe.blog.common.result.Result;
 import com.wangzhe.blog.dto.RoleDto;
 import com.wangzhe.blog.dto.RoleMenuDto;
+import com.wangzhe.blog.dto.RoleResourceDto;
 import com.wangzhe.blog.entity.Role;
 import com.wangzhe.blog.service.RoleService;
-import com.wangzhe.blog.vo.InsertResourceVo;
-import com.wangzhe.blog.vo.RoleVo;
-import com.wangzhe.blog.vo.SelectRolesVo;
-import com.wangzhe.blog.vo.UpdateRoleVo;
+import com.wangzhe.blog.vo.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -77,14 +75,23 @@ public class RoleController {
     }
 
     @ApiOperation("后台查询角色菜单列表视图数据")
-    @PutMapping("/admin/role/menus")
+    @GetMapping("/admin/role/menus")
     public Result<?> selectRoleMenu() {
         List<RoleMenuDto> menuDtoList = roleService.selectRoleMenu();
         return Result.ok(menuDtoList);
     }
+
     @ApiOperation("后台查询角色资源列表视图数据")
-    @PutMapping("/admin/role/resources")
-    public Result<?> selectRoleResource() {
+    @GetMapping("/admin/role/resources")
+    public Result<List<RoleResourceDto>> selectRoleResource() {
+        List<RoleResourceDto> roleResourceDtoList = roleService.selectRoleResource();
+        return Result.ok(roleResourceDtoList);
+    }
+
+    @ApiOperation("后台删除角色")
+    @DeleteMapping("/admin/roles")
+    public Result<List<RoleResourceDto>> deleteRoles(@Validated DeleteRolesVo deleteRolesVo) {
+        roleService.deleteRoles(deleteRolesVo);
         return Result.ok();
     }
 
