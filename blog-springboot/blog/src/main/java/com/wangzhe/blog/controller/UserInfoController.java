@@ -2,7 +2,9 @@ package com.wangzhe.blog.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wangzhe.blog.common.result.Result;
+import com.wangzhe.blog.dto.SelectUserRolesDto;
 import com.wangzhe.blog.dto.SelectUsersDto;
+import com.wangzhe.blog.service.RoleService;
 import com.wangzhe.blog.service.UserInfoService;
 import com.wangzhe.blog.vo.InsertUserRoleVo;
 import com.wangzhe.blog.vo.SelectUsersVo;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * <p>
@@ -40,9 +44,15 @@ public class UserInfoController {
     @ApiOperation("后台用户添加角色")
     @PostMapping("/admin/user")
     public Result<?> insertUserRole(@Validated InsertUserRoleVo insertUserRoleVo) {
-
-
+        userInfoService.insertUserRole(insertUserRoleVo);
         return Result.ok();
+    }
+
+    @ApiOperation("后台查询所有角色")
+    @GetMapping("/admin/user/roles")
+    public Result<List<SelectUserRolesDto>> selectRoles() {
+        List<SelectUserRolesDto> selectUserRolesDtos = userInfoService.selectRoles();
+        return Result.ok(selectUserRolesDtos);
     }
 
 }

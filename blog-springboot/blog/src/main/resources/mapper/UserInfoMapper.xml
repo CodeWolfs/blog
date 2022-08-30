@@ -24,7 +24,7 @@
         <result column="ip_source" property="ipSource"/>
         <result column="create_time" property="createTime"/>
         <result column="last_login_time" property="lastLoginTime"/>
-        <collection property="roleList" javaType="List" ofType="com.wangzhe.blog.dto.UserRoleDto" select="" column="{userInfoId = id}">
+        <collection property="roleList" javaType="List" ofType="com.wangzhe.blog.dto.UserRoleDto" select="com.wangzhe.blog.mapper.UserRoleRelationMapper.selectUserRoleDto" column="{userInfoId = id}">
         </collection>
     </resultMap>
     <select id="selectUsers" resultMap="selectUsersResultMap">

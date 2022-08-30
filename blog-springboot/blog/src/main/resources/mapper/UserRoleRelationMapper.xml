@@ -4,11 +4,17 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.wangzhe.blog.entity.UserRoleRelation">
-        <id column="id" property="id" />
-        <result column="user_info_id" property="userInfoId" />
-        <result column="role_id" property="roleId" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
+        <id column="id" property="id"/>
+        <result column="user_info_id" property="userInfoId"/>
+        <result column="role_id" property="roleId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
     </resultMap>
+    <select id="selectUserRoleDto" resultType="com.wangzhe.blog.dto.UserRoleDto">
+        select r.id as roleId,r.role_name as roleName
+        from user_role_relation urr  join role r on urr.role_id = r.id
+        where urr.user_info_id = #{userInfoId}
+
+    </select>
 
 </mapper>

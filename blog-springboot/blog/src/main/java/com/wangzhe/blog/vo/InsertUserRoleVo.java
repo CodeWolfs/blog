@@ -18,6 +18,9 @@ import java.util.List;
 @ApiModel("后台添加用户角色入参实体")
 public class InsertUserRoleVo {
 
+    @ApiModelProperty(value = "用户id", required = true)
+    private Integer userInfoId;
+
     @ApiModelProperty(value = "角色id列表", required = true)
     private List<Integer> roleIdList;
 
