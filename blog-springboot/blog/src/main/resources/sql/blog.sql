@@ -11,11 +11,34 @@
  Target Server Version : 80027
  File Encoding         : 65001
 
- Date: 29/08/2022 17:32:27
+ Date: 30/08/2022 17:28:10
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for app_image_relation
+-- ----------------------------
+DROP TABLE IF EXISTS `app_image_relation`;
+CREATE TABLE `app_image_relation`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '关联图片id',
+  `relation_id` int(0) NOT NULL COMMENT '关联应用id',
+  `image_url` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '图片链接',
+  `file_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '文件名称',
+  `apply_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '应用类型，10说说',
+  `deleted` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0' COMMENT '逻辑删除',
+  `create_time` datetime(0) NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of app_image_relation
+-- ----------------------------
+INSERT INTO `app_image_relation` VALUES (3, 2, 'http://baidu.com', '1', '10', '0', '2022-08-30 14:17:01');
+INSERT INTO `app_image_relation` VALUES (4, 2, 'http://codewolf.com', '2', '10', '0', '2022-08-30 14:17:01');
+INSERT INTO `app_image_relation` VALUES (5, 1, 'tt1', '3', '10', '0', '2022-08-30 16:24:56');
+INSERT INTO `app_image_relation` VALUES (6, 1, 'tt22', '4', '10', '0', '2022-08-30 16:24:56');
 
 -- ----------------------------
 -- Table structure for article
@@ -174,6 +197,46 @@ INSERT INTO `message` VALUES (2, '11', '11', '11', '1', '11', 1, '1', '2022-08-0
 INSERT INTO `message` VALUES (3, '11', '11', '11', '1', '11', 1, '1', '2022-08-09 16:20:49', '2022-08-19 16:21:58', '1');
 
 -- ----------------------------
+-- Table structure for photo
+-- ----------------------------
+DROP TABLE IF EXISTS `photo`;
+CREATE TABLE `photo`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '照片id',
+  `album_id` int(0) NOT NULL COMMENT '相册id',
+  `photo_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '照片名称',
+  `photo_desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '照片描述',
+  `photo_src` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '照片链接',
+  `deleted` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '逻辑删除',
+  `create_time` datetime(0) NOT NULL COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of photo
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for photo_album
+-- ----------------------------
+DROP TABLE IF EXISTS `photo_album`;
+CREATE TABLE `photo_album`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '相册id',
+  `album_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '相册名称',
+  `album_desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '相册描述',
+  `album_cover` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '相册封面',
+  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '状态1公开2私密',
+  `deleted` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '逻辑删除',
+  `create_time` datetime(0) NOT NULL COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of photo_album
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for resource
 -- ----------------------------
 DROP TABLE IF EXISTS `resource`;
@@ -287,6 +350,27 @@ INSERT INTO `tag` VALUES (4, '标签散散', '2022-08-12 10:16:52', NULL);
 INSERT INTO `tag` VALUES (5, '标签2323', '2022-08-12 16:22:28', NULL);
 
 -- ----------------------------
+-- Table structure for talk
+-- ----------------------------
+DROP TABLE IF EXISTS `talk`;
+CREATE TABLE `talk`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '说说id',
+  `user_info_id` int(0) NOT NULL COMMENT '用户id',
+  `content` varchar(2500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '说说内容',
+  `is_top` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0' COMMENT '是否制定0否1是',
+  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '1' COMMENT '1公开，2私密',
+  `create_time` datetime(0) NOT NULL COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of talk
+-- ----------------------------
+INSERT INTO `talk` VALUES (1, 2, 'test', '1', '1', '2022-08-30 14:16:34', '2022-08-30 16:24:56');
+INSERT INTO `talk` VALUES (2, 2, '123456123', '0', '1', '2022-08-30 14:17:01', NULL);
+
+-- ----------------------------
 -- Table structure for user_auth
 -- ----------------------------
 DROP TABLE IF EXISTS `user_auth`;
@@ -343,11 +427,14 @@ CREATE TABLE `user_role_relation`  (
   `create_time` datetime(0) NOT NULL COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_role_relation
 -- ----------------------------
-INSERT INTO `user_role_relation` VALUES (1, 2, 1, '2022-08-05 15:41:32', NULL);
+INSERT INTO `user_role_relation` VALUES (2, 2, 1, '2022-08-30 10:44:28', NULL);
+INSERT INTO `user_role_relation` VALUES (3, 2, 3, '2022-08-30 10:44:28', NULL);
+INSERT INTO `user_role_relation` VALUES (4, 4, 1, '2022-08-30 10:45:11', NULL);
+INSERT INTO `user_role_relation` VALUES (5, 4, 3, '2022-08-30 10:45:11', NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;

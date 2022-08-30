@@ -38,6 +38,10 @@ public class MybatisPlusGenerator {
 //        tableName.add("menu");
 //        tableName.add("role_menu_relation");
 //        tableName.add("user_role_relation");
+//        tableName.add("talk");
+//        tableName.add("app_image_relation");
+        tableName.add("photo");
+        tableName.add("photo_album");
 
         FastAutoGenerator.create(URL, USERNAME, PASSWORD)
                 .globalConfig(builder -> {

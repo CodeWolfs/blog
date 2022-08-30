@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wangzhe.blog.mapper.TalkMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wangzhe.blog.entity.Talk">
+        <id column="id" property="id"/>
+        <result column="user_info_id" property="userInfoId"/>
+        <result column="content" property="content"/>
+        <result column="is_top" property="isTop"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <resultMap id="selectTalkResultMap" type="com.wangzhe.blog.dto.SelectTalkDto">
+        <id column="id" property="id"/>
+        <result column="user_info_id" property="userInfoId"/>
+        <result column="avatar" property="avatar"/>
+        <result column="nickname" property="nickName"/>
+        <result column="content" property="content"/>
+        <result column="is_top" property="isTop"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <collection property="imageUrlList" javaType="List" ofType="string"
+                    select="com.wangzhe.blog.mapper.AppImageRelationMapper.selectImageByRelationId"
+                    column="{relationId = id, applyType = apply_type}">
+        </collection>
+    </resultMap>
+
+    <select id="selectTalk" resultMap="selectTalkResultMap">
+        select t.*, ui.avatar, ui.nickname, '10' as apply_type
+        from talk t
+                 join user_info ui on t.user_info_id = ui.id
+        where t.id = #{id}
+    </select>
+    <select id="selectTalks" resultMap="selectTalkResultMap">
+        select t.*, ui.avatar,ui.nickname, '10' as apply_type
+        from talk t join user_info ui on t.user_info_id = ui.id
+        <where>
+            <if test="condition.status != null">
+                and t.status = #{condition.status}
+            </if>
+        </where>
+    </select>
+
+</mapper>
