@@ -1,9 +1,14 @@
 package com.wangzhe.blog.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.wangzhe.blog.dto.PhotoAlbumDto;
 import com.wangzhe.blog.entity.PhotoAlbum;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.wangzhe.blog.vo.InsertPhotoAlbumVo;
+import com.wangzhe.blog.vo.SelectPhotoAlbums;
 import com.wangzhe.blog.vo.UpdatePhotoAlbumVo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -31,4 +36,8 @@ public interface PhotoAlbumService extends IService<PhotoAlbum> {
     void deletePhotoAlbum(Integer id);
 
 
+    /**
+     * 后台查询相册列表
+     */
+    Page<PhotoAlbumDto> selectPhotoAlbums(SelectPhotoAlbums selectPhotoAlbums);
 }

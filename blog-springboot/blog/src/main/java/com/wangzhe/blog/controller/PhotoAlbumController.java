@@ -1,6 +1,9 @@
 package com.wangzhe.blog.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wangzhe.blog.common.result.Result;
+import com.wangzhe.blog.dto.PhotoAlbumDto;
+import com.wangzhe.blog.entity.PhotoAlbum;
 import com.wangzhe.blog.service.PhotoAlbumService;
 import com.wangzhe.blog.vo.InsertPhotoAlbumVo;
 import com.wangzhe.blog.vo.SelectPhotoAlbums;
@@ -12,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * <p>
@@ -51,14 +55,15 @@ public class PhotoAlbumController {
 
     @ApiOperation("后台查询相册列表")
     @GetMapping("/admin/photoAlbums")
-    public Result<?> selectPhotoAlbums(@Validated SelectPhotoAlbums selectPhotoAlbums) {
-
-        return Result.ok();
+    public Result<Page<PhotoAlbumDto>> selectPhotoAlbums(@Validated SelectPhotoAlbums selectPhotoAlbums) {
+        Page<PhotoAlbumDto> photoAlbumList = photoAlbumService.selectPhotoAlbums(selectPhotoAlbums);
+        return Result.ok(photoAlbumList);
     }
 
     @ApiOperation("后台查询相册详情")
     @GetMapping("/admin/photoAlbum/{id}")
     public Result<?> selectPhotoAlbum(@Valid @PathVariable("id") Integer id) {
+
 
 
         return Result.ok();

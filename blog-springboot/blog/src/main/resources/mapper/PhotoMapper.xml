@@ -4,14 +4,19 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.wangzhe.blog.entity.Photo">
-        <id column="id" property="id" />
-        <result column="album_id" property="albumId" />
-        <result column="photo_name" property="photoName" />
-        <result column="photo_desc" property="photoDesc" />
-        <result column="photo_src" property="photoSrc" />
-        <result column="deleted" property="deleted" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
+        <id column="id" property="id"/>
+        <result column="album_id" property="albumId"/>
+        <result column="photo_name" property="photoName"/>
+        <result column="photo_desc" property="photoDesc"/>
+        <result column="photo_src" property="photoSrc"/>
+        <result column="deleted" property="deleted"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
     </resultMap>
+    <select id="selectAllPhoto" resultType="com.wangzhe.blog.entity.Photo">
+        select *
+        from photo
+        where album_id = #{albumId};
+    </select>
 
 </mapper>

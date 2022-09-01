@@ -4,14 +4,28 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.wangzhe.blog.entity.PhotoAlbum">
-        <id column="id" property="id" />
-        <result column="album_name" property="albumName" />
-        <result column="album_desc" property="albumDesc" />
-        <result column="album_cover" property="albumCover" />
-        <result column="status" property="status" />
-        <result column="deleted" property="deleted" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
+        <id column="id" property="id"/>
+        <result column="album_name" property="albumName"/>
+        <result column="album_desc" property="albumDesc"/>
+        <result column="album_cover" property="albumCover"/>
+        <result column="status" property="status"/>
+        <result column="deleted" property="deleted"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
     </resultMap>
+    <delete id="deleteByIdForPhysics">
+        delete
+        from photo_album
+        where id = #{id};
+    </delete>
+    <select id="selectPhotoAlbumsPage" resultType="com.wangzhe.blog.dto.PhotoAlbumDto">
+        select *
+        from photo_album
+        <where>
+            <if test="condition.albumName != null">
+                and album_name = #{condition.albumName};
+            </if>
+        </where>
+    </select>
 
 </mapper>
