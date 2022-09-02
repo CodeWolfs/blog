@@ -25,5 +25,14 @@ public interface PhotoAlbumMapper extends BaseMapper<PhotoAlbum> {
      */
     void deleteByIdForPhysics(@Param("id") Integer id);
 
+    /**
+     * 分页查询相册
+     */
     Page<PhotoAlbumDto> selectPhotoAlbumsPage(@Param("page") Page<PhotoAlbumDto> photoAlbumPage, @Param("condition") SelectPhotoAlbums selectPhotoAlbums);
+
+    /**
+     * 查询相册详情
+     */
+    PhotoAlbumDto selectPhotoAlbum(@Param("id") Integer id);
+
 }

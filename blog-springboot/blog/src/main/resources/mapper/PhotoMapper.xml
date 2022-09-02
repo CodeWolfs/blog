@@ -13,10 +13,19 @@
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
     </resultMap>
+    <delete id="deletePhotoForPhysics">
+        delete from photo
+
+    </delete>
     <select id="selectAllPhoto" resultType="com.wangzhe.blog.entity.Photo">
         select *
         from photo
         where album_id = #{albumId};
+    </select>
+    <select id="selectPhotosByAlbumId" resultType="com.wangzhe.blog.entity.Photo">
+        select *
+        from photo
+        where album_id = #{condition.albumId}
     </select>
 
 </mapper>

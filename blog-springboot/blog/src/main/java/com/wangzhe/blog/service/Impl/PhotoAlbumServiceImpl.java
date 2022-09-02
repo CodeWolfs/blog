@@ -76,4 +76,10 @@ public class PhotoAlbumServiceImpl extends ServiceImpl<PhotoAlbumMapper, PhotoAl
         photoAlbumPage = photoAlbumMapper.selectPhotoAlbumsPage(photoAlbumPage,selectPhotoAlbums);
         return photoAlbumPage;
     }
+
+    @Override
+    public PhotoAlbumDto selectPhotoAlbum(Integer id) {
+        PhotoAlbumDto photoAlbumDto = photoAlbumMapper.selectPhotoAlbum(id);
+        return photoAlbumDto;
+    }
 }

@@ -63,10 +63,8 @@ public class PhotoAlbumController {
     @ApiOperation("后台查询相册详情")
     @GetMapping("/admin/photoAlbum/{id}")
     public Result<?> selectPhotoAlbum(@Valid @PathVariable("id") Integer id) {
-
-
-
-        return Result.ok();
+        PhotoAlbumDto photoAlbumDto = photoAlbumService.selectPhotoAlbum(id);
+        return Result.ok(photoAlbumDto);
     }
 
 

@@ -40,4 +40,9 @@ public interface PhotoAlbumService extends IService<PhotoAlbum> {
      * 后台查询相册列表
      */
     Page<PhotoAlbumDto> selectPhotoAlbums(SelectPhotoAlbums selectPhotoAlbums);
+
+    /**
+     * 后台查询相册详情
+     */
+    PhotoAlbumDto selectPhotoAlbum(Integer id);
 }

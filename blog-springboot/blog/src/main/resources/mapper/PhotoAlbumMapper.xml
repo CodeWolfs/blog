@@ -27,5 +27,10 @@
             </if>
         </where>
     </select>
+    <select id="selectPhotoAlbum" resultType="com.wangzhe.blog.dto.PhotoAlbumDto">
+        select *
+        from photo_album
+        where id = #{id};
+    </select>
 
 </mapper>
