@@ -9,14 +9,17 @@ import com.wangzhe.blog.entity.Photo;
 import com.wangzhe.blog.entity.PhotoAlbum;
 import com.wangzhe.blog.mapper.PhotoAlbumMapper;
 import com.wangzhe.blog.mapper.PhotoMapper;
+import com.wangzhe.blog.service.PhotoAlbumService;
 import com.wangzhe.blog.service.PhotoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wangzhe.blog.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -29,6 +32,7 @@ import java.util.stream.Stream;
  * @since 2022-27-30
  */
 @Service
+
 public class PhotoServiceImpl extends ServiceImpl<PhotoMapper, Photo> implements PhotoService {
 
     @Autowired
@@ -36,6 +40,10 @@ public class PhotoServiceImpl extends ServiceImpl<PhotoMapper, Photo> implements
 
     @Autowired
     private PhotoAlbumMapper photoAlbumMapper;
+
+    @Autowired
+    @Lazy(true)
+    private PhotoAlbumService photoAlbumService;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -101,5 +109,29 @@ public class PhotoServiceImpl extends ServiceImpl<PhotoMapper, Photo> implements
             //物理删除
             photoMapper.deletePhotoForPhysics(deletePhotosVo.getPhotoIdList());
         }
+    }
+
+    @Override
+    public List<Photo> selectPhotosForRecycle() {
+        return photoMapper.selectRecyclePhotos();
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void resumePhotos(ResumePhotosVo resumePhotosVo) {
+        // 找回照片后，需要回复逻辑删除的相册
+/*        List<Photo> collect = resumePhotosVo.getPhotoIdList().stream().map(id -> {
+            Photo photo = new Photo();
+            photo.setId(id);
+            photo.setDeleted("0");
+            return photo;
+        }).collect(Collectors.toList());*/
+        photoMapper.updatePhotoDeleted(resumePhotosVo.getPhotoIdList(),"0");
+
+        LambdaQueryWrapper<Photo> photoLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        photoLambdaQueryWrapper.in(Photo::getId,resumePhotosVo.getPhotoIdList());
+        List<Photo> list = this.list(photoLambdaQueryWrapper);
+        Set<Integer> albumIds = list.stream().map(Photo::getAlbumId).collect(Collectors.toSet());
+        photoAlbumMapper.updatePhotoAlbumDeleted(albumIds,"0");
     }
 }

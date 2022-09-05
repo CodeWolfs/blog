@@ -36,4 +36,14 @@ public interface PhotoMapper extends BaseMapper<Photo> {
      * 后台物理删除相片
      */
     void deletePhotoForPhysics(@Param("photoIdList") List<Integer> photoIdList);
+
+    /**
+     * 查询回收站中的图片
+     */
+    List<Photo> selectRecyclePhotos();
+
+    /**
+     * 后台更新逻辑删除为
+     */
+    void updatePhotoDeleted(@Param("photoIdList") List<Integer> photoIdList, @Param("deleted") String deleted);
 }

@@ -13,8 +13,19 @@
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
     </resultMap>
+    <update id="updatePhotoDeleted">
+        update photo
+        set deleted = #{deleted}
+        where
+        <foreach collection="photoIdList" open="id in (" separator="," close=")" item="id">
+            #{id}
+        </foreach>
+    </update>
     <delete id="deletePhotoForPhysics">
-        delete from photo
+        delete from photo where
+        <foreach collection="photoIdList" open="id in (" separator="," close=")" item="id">
+            #{id}
+        </foreach>
 
     </delete>
     <select id="selectAllPhoto" resultType="com.wangzhe.blog.entity.Photo">
@@ -26,6 +37,11 @@
         select *
         from photo
         where album_id = #{condition.albumId}
+    </select>
+    <select id="selectRecyclePhotos" resultType="com.wangzhe.blog.entity.Photo">
+        select *
+        from photo
+        where deleted = '1';
     </select>
 
 </mapper>

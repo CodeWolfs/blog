@@ -13,6 +13,14 @@
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
     </resultMap>
+    <update id="updatePhotoAlbumDeleted">
+        update photo_album
+        set deleted = #{deleted}
+        where
+        <foreach collection="albumIds" open="id in (" separator="," close=")" item="id">
+            #{id}
+        </foreach>
+    </update>
     <delete id="deleteByIdForPhysics">
         delete
         from photo_album

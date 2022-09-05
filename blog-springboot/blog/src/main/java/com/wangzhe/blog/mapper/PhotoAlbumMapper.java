@@ -8,6 +8,8 @@ import com.wangzhe.blog.vo.SelectPhotoAlbums;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Set;
+
 /**
  * <p>
  *  Mapper 接口
@@ -35,4 +37,8 @@ public interface PhotoAlbumMapper extends BaseMapper<PhotoAlbum> {
      */
     PhotoAlbumDto selectPhotoAlbum(@Param("id") Integer id);
 
+    /**
+     * 后台更新相册的逻辑删除为
+     */
+    void updatePhotoAlbumDeleted(@Param("albumIds") Set<Integer> albumIds, @Param("deleted") String deleted);
 }

@@ -47,4 +47,14 @@ public interface PhotoService extends IService<Photo> {
      * 后台删除照片
      */
     void deletePhotos(DeletePhotosVo deletePhotosVo);
+
+    /**
+     * 后台查找回收站图片
+     */
+    List<Photo> selectPhotosForRecycle();
+
+    /**
+     * 后台找回照片
+     */
+    void resumePhotos(ResumePhotosVo resumePhotosVo);
 }

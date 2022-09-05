@@ -84,28 +84,20 @@ public class PhotoController {
     @DeleteMapping("/admin/photos/")
     public Result<?> deletePhotos(@Validated DeletePhotosVo deletePhotosVo) {
         photoService.deletePhotos(deletePhotosVo);
-
-
-
-
-
-
-
         return Result.ok();
     }
 
     @ApiOperation("后台查询回收站的照片")
     @GetMapping("/admin/photos/recycle")
-    public Result<?> selectPhotos() {
-
-
-        return Result.ok();
+    public Result<List<Photo>> selectPhotos() {
+        List<Photo> photos = photoService.selectPhotosForRecycle();
+        return Result.ok(photos);
     }
 
     @ApiOperation("后台批量恢复照片")
     @PatchMapping("/admin/photos/resume")
     public Result<?> resumePhotos(@Validated ResumePhotosVo resumePhotosVo) {
-
+        photoService.resumePhotos(resumePhotosVo);
         return Result.ok();
     }
 
