@@ -11,7 +11,7 @@
  Target Server Version : 80027
  File Encoding         : 65001
 
- Date: 06/09/2022 17:37:38
+ Date: 07/09/2022 16:17:04
 */
 
 SET NAMES utf8mb4;
@@ -195,6 +195,25 @@ CREATE TABLE `message`  (
 INSERT INTO `message` VALUES (1, '11', '11', '11', '1', '11', 1, '1', '2022-08-09 16:20:49', '2022-08-19 16:21:58', '1');
 INSERT INTO `message` VALUES (2, '11', '11', '11', '1', '11', 1, '1', '2022-08-09 16:20:49', '2022-08-19 16:21:58', '1');
 INSERT INTO `message` VALUES (3, '11', '11', '11', '1', '11', 1, '1', '2022-08-09 16:20:49', '2022-08-19 16:21:58', '1');
+
+-- ----------------------------
+-- Table structure for page
+-- ----------------------------
+DROP TABLE IF EXISTS `page`;
+CREATE TABLE `page`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '页面id',
+  `page_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '页面名称',
+  `page_label` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '页面标签',
+  `page_cover` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '页面封面',
+  `create_time` datetime(0) NOT NULL COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of page
+-- ----------------------------
+INSERT INTO `page` VALUES (1, '首页', 'home', 'http://baidu.com', '2022-09-07 15:37:25', NULL);
 
 -- ----------------------------
 -- Table structure for photo
@@ -398,7 +417,7 @@ CREATE TABLE `user_auth`  (
 -- ----------------------------
 -- Records of user_auth
 -- ----------------------------
-INSERT INTO `user_auth` VALUES (1, 2, '2546972682@qq.com', '$2a$10$F0FGCVJ.FsmTzDuTyvHIs.50aX3vVERs8bfdTCz8mVDkWhNXFw9N.', '1', NULL, NULL, '2022-08-05 11:36:47', NULL, NULL, 0);
+INSERT INTO `user_auth` VALUES (1, 2, '2546972682@qq.com', '$2a$10$ofEs8Fs.iny7Pm2nxpYzteTanBJB1ZCc4FyjR4JFd/5Kr54PLWXmq', '1', NULL, NULL, '2022-08-05 11:36:47', '2022-09-07 16:10:49', NULL, 0);
 
 -- ----------------------------
 -- Table structure for user_info
@@ -420,7 +439,7 @@ CREATE TABLE `user_info`  (
 -- ----------------------------
 -- Records of user_info
 -- ----------------------------
-INSERT INTO `user_info` VALUES (2, '用户', 'http://www.baidu.com', NULL, NULL, '0', '2022-08-05 11:36:47', NULL, 0);
+INSERT INTO `user_info` VALUES (2, 'xinyi ', 'hhhahaha', 'ceshi gengxin ', 'cdoe wofls', '0', '2022-08-05 11:36:47', '2022-09-07 15:40:05', 0);
 
 -- ----------------------------
 -- Table structure for user_role_relation
@@ -448,7 +467,7 @@ INSERT INTO `user_role_relation` VALUES (5, 4, 3, '2022-08-30 10:45:11', NULL);
 -- ----------------------------
 DROP TABLE IF EXISTS `web_info_config`;
 CREATE TABLE `web_info_config`  (
-  `id` int(0) NOT NULL COMMENT '网站配置id',
+  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '网站配置id',
   `web_avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '网站头像',
   `web_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '网站名称',
   `web_author` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '网站作者',
@@ -464,15 +483,23 @@ CREATE TABLE `web_info_config`  (
   `user_avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '用户头像',
   `visitor_avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '游客头像',
   `default_article_cover` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '默认文章封面',
-  `email_notice` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '邮箱通知',
-  `comment_verify` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '评论审核',
-  `message_verify` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '留言审核',
-  `test` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `email_notice` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0' COMMENT '邮箱通知',
+  `comment_verify` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0' COMMENT '评论审核',
+  `message_verify` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0' COMMENT '留言审核',
+  `reward_status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0' COMMENT '打赏状态',
+  `wechat_pay` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '微信收款码',
+  `ali_pay` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '支付宝收款码',
+  `chat_room` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0' COMMENT '聊天室',
+  `websocket_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT 'websocket地址',
+  `music_player` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0' COMMENT '音乐播放器',
+  `create_time` datetime(0) NOT NULL COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of web_info_config
 -- ----------------------------
+INSERT INTO `web_info_config` VALUES (1, 'webavaatar', '王哲的个人博客', '王哲', '个人博客', '2022-11-23 11:30:50', '这里是网站公告', '湘ICP备19021924号', '1', 'weibo pay', '123', 'http://gitee', 'http://gitee', 'http://useravatar', 'http://useravatar', 'https://baidu.com', '0', '0', '0', '0', 'wechat pay', '修改时代峰峻', '0', 'http://123', '0', '2022-09-07 15:04:16', '2022-09-07 15:36:37');
 
 SET FOREIGN_KEY_CHECKS = 1;
