@@ -3,6 +3,7 @@ package com.wangzhe.blog.controller;
 import com.wangzhe.blog.common.result.Result;
 import com.wangzhe.blog.service.UserAuthService;
 import com.wangzhe.blog.vo.EmailVo;
+import com.wangzhe.blog.vo.UpdateUserAuthVo;
 import com.wangzhe.blog.vo.UserLoginVo;
 import com.wangzhe.blog.vo.UserRegisterVo;
 import io.swagger.annotations.Api;
@@ -11,10 +12,7 @@ import io.swagger.annotations.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 
@@ -61,6 +59,13 @@ public class UserAuthController {
         tokenMap.put("tokenHead",tokenHead);
         tokenMap.put("tokenHeader",tokenHeader);
         return Result.ok(tokenMap);
+    }
+
+    @ApiOperation("后台更新用户认证密码")
+    @PatchMapping("/admin/userAuth/")
+    public Result<?> updateUserAuth(@Validated UpdateUserAuthVo updateUserAuthVo) {
+        authService.updateUserAuth(updateUserAuthVo);
+        return Result.ok();
     }
 
 }

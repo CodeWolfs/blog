@@ -40,7 +40,7 @@
                  left join role r on urr.role_id = r.id
                  left join role_resource_relation rrr on r.id = rrr.role_id
                  left join resource re on rrr.resource_id = re.id
-        where urr.user_info_id = #{userInfoId}
+        where urr.user_info_id = #{userInfoId} and re.uri is not null;
     </select>
     <select id="selectAllResources" resultMap="selectAllResourcesMap">
         select *

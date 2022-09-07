@@ -1,5 +1,6 @@
 package com.wangzhe.blog.service.Impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wangzhe.blog.dto.SelectUserRolesDto;
@@ -15,6 +16,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wangzhe.blog.service.UserRoleRelationService;
 import com.wangzhe.blog.vo.InsertUserRoleVo;
 import com.wangzhe.blog.vo.SelectUsersVo;
+import com.wangzhe.blog.vo.UpdateUserInfoVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -76,5 +78,12 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
             return userRoleRelation;
         }).collect(Collectors.toList());
         userRoleRelationService.saveBatch(collect);
+    }
+
+    @Override
+    public void updateUserInfo(UpdateUserInfoVo updateUserInfoVo) {
+        UserInfo userInfo = UserInfo.builder().build();
+        BeanUtil.copyProperties(updateUserInfoVo,userInfo);
+        this.updateById(userInfo);
     }
 }

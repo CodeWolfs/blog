@@ -7,6 +7,7 @@ import com.wangzhe.blog.entity.UserInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.wangzhe.blog.vo.InsertUserRoleVo;
 import com.wangzhe.blog.vo.SelectUsersVo;
+import com.wangzhe.blog.vo.UpdateUserInfoVo;
 
 import java.util.List;
 
@@ -34,4 +35,9 @@ public interface UserInfoService extends IService<UserInfo> {
      * 后台添加用户角色
      */
     void insertUserRole(InsertUserRoleVo insertUserRoleVo);
+
+    /**
+     * 后台更新用户信息
+     */
+    void updateUserInfo(UpdateUserInfoVo updateUserInfoVo);
 }

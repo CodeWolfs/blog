@@ -20,6 +20,7 @@ import com.wangzhe.blog.utils.CommonUtil;
 import com.wangzhe.blog.utils.JwtTokenUtil;
 import com.wangzhe.blog.utils.RedisUtil;
 import com.wangzhe.blog.vo.EmailVo;
+import com.wangzhe.blog.vo.UpdateUserAuthVo;
 import com.wangzhe.blog.vo.UserLoginVo;
 import com.wangzhe.blog.vo.UserRegisterVo;
 import org.springframework.beans.BeanUtils;
@@ -155,5 +156,18 @@ public class UserAuthServiceImpl extends ServiceImpl<UserAuthMapper, UserAuth> i
         List<Resource> resources = resourceMapper.selectResourceListByUserInfoId(userInfo.getId());
         userDetails.setResourceList(resources);
         return userDetails;
+    }
+
+    @Override
+    public void updateUserAuth(UpdateUserAuthVo updateUserAuthVo) {
+        UserAuth userAuth = new UserAuth();
+        UserAuth byId = this.getById(updateUserAuthVo.getId());
+        if (!passwordEncoder.matches(updateUserAuthVo.getOldPassword(),byId.getPassword())) {
+           throw new BizException("原密码错误");
+        }
+        userAuth.setId(updateUserAuthVo.getId());
+        userAuth.setPassword(passwordEncoder.encode(updateUserAuthVo.getNewPassword()));
+
+        this.updateById(userAuth);
     }
 }

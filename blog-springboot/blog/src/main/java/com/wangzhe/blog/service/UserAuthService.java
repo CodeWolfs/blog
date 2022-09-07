@@ -3,6 +3,7 @@ package com.wangzhe.blog.service;
 import com.wangzhe.blog.entity.UserAuth;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.wangzhe.blog.vo.EmailVo;
+import com.wangzhe.blog.vo.UpdateUserAuthVo;
 import com.wangzhe.blog.vo.UserLoginVo;
 import com.wangzhe.blog.vo.UserRegisterVo;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +17,8 @@ import org.springframework.security.core.userdetails.UserDetails;
  * @since 2022-22-04
  */
 public interface UserAuthService extends IService<UserAuth> {
+
+
 
     /**
      * 用户注册
@@ -38,5 +41,10 @@ public interface UserAuthService extends IService<UserAuth> {
      * @param username 用户名
      */
     UserDetails loadUserByUsername(String username);
+
+    /**
+     * 后台更新用户账号密码
+     */
+    void updateUserAuth(UpdateUserAuthVo updateUserAuthVo);
 }
 
