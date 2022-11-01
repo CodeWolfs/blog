@@ -43,7 +43,8 @@ public class MybatisPlusGenerator {
 //        tableName.add("photo");
 //        tableName.add("photo_album");
 //        tableName.add("web_info_config");
-        tableName.add("page");
+//        tableName.add("page");
+        tableName.add("china_holiday");
 
         FastAutoGenerator.create(URL, USERNAME, PASSWORD)
                 .globalConfig(builder -> {
