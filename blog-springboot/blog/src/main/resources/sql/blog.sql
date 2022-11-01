@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : mysql_localhost
+ Source Server         : root
  Source Server Type    : MySQL
- Source Server Version : 80027
+ Source Server Version : 80023
  Source Host           : localhost:3306
  Source Schema         : blog
 
  Target Server Type    : MySQL
- Target Server Version : 80027
+ Target Server Version : 80023
  File Encoding         : 65001
 
- Date: 07/09/2022 16:17:04
+ Date: 01/11/2022 22:08:56
 */
 
 SET NAMES utf8mb4;
@@ -119,6 +119,62 @@ INSERT INTO `category` VALUES (8, '测试', '2022-08-16 14:38:22', NULL);
 INSERT INTO `category` VALUES (9, ' ', '2022-08-16 14:38:48', NULL);
 
 -- ----------------------------
+-- Table structure for china_holiday
+-- ----------------------------
+DROP TABLE IF EXISTS `china_holiday`;
+CREATE TABLE `china_holiday`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `date` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '日期: yyyy/MM/dd',
+  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '类型：0休息，1工作',
+  `deleted` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0' COMMENT '逻辑删除，0没有删除1：删除',
+  `create_time` datetime(0) NOT NULL COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of china_holiday
+-- ----------------------------
+INSERT INTO `china_holiday` VALUES (1, '20220101', '0', '0', '2022-11-01 21:36:40', NULL);
+INSERT INTO `china_holiday` VALUES (2, '20220102', '0', '0', '2022-11-01 21:37:02', NULL);
+INSERT INTO `china_holiday` VALUES (3, '20220103', '0', '0', '2022-11-01 21:37:27', NULL);
+INSERT INTO `china_holiday` VALUES (4, '20220131', '0', '0', '2022-11-01 21:38:23', NULL);
+INSERT INTO `china_holiday` VALUES (5, '20220201', '0', '0', '2022-11-01 21:40:59', NULL);
+INSERT INTO `china_holiday` VALUES (6, '20220202', '0', '0', '2022-11-01 21:41:56', NULL);
+INSERT INTO `china_holiday` VALUES (7, '20220203', '0', '0', '2022-11-01 21:42:07', NULL);
+INSERT INTO `china_holiday` VALUES (8, '20220204', '0', '0', '2022-11-01 21:42:19', NULL);
+INSERT INTO `china_holiday` VALUES (9, '20220205', '0', '0', '2022-11-01 21:42:32', NULL);
+INSERT INTO `china_holiday` VALUES (10, '20220206', '0', '0', '2022-11-01 21:42:43', NULL);
+INSERT INTO `china_holiday` VALUES (11, '20220129', '1', '0', '2022-11-01 21:43:21', NULL);
+INSERT INTO `china_holiday` VALUES (12, '20220130', '1', '0', '2022-11-01 21:43:31', NULL);
+INSERT INTO `china_holiday` VALUES (13, '20220403', '0', '0', '2022-11-01 21:44:12', NULL);
+INSERT INTO `china_holiday` VALUES (14, '20220404', '0', '0', '2022-11-01 21:44:23', NULL);
+INSERT INTO `china_holiday` VALUES (15, '20220405', '0', '0', '2022-11-01 21:44:31', NULL);
+INSERT INTO `china_holiday` VALUES (16, '20220402', '1', '0', '2022-11-01 21:45:07', NULL);
+INSERT INTO `china_holiday` VALUES (17, '20220430', '0', '0', '2022-11-01 21:47:32', NULL);
+INSERT INTO `china_holiday` VALUES (18, '20220501', '0', '0', '2022-11-01 21:48:57', NULL);
+INSERT INTO `china_holiday` VALUES (19, '20220502', '0', '0', '2022-11-01 21:48:57', NULL);
+INSERT INTO `china_holiday` VALUES (20, '20220503', '0', '0', '2022-11-01 21:48:57', NULL);
+INSERT INTO `china_holiday` VALUES (21, '20220504', '0', '0', '2022-11-01 21:48:57', NULL);
+INSERT INTO `china_holiday` VALUES (22, '20220424', '1', '0', '2022-11-01 21:49:52', NULL);
+INSERT INTO `china_holiday` VALUES (23, '20220507', '1', '0', '2022-11-01 21:49:52', NULL);
+INSERT INTO `china_holiday` VALUES (24, '20220603', '0', '0', '2022-11-01 21:50:52', NULL);
+INSERT INTO `china_holiday` VALUES (25, '20220604', '0', '0', '2022-11-01 21:50:52', NULL);
+INSERT INTO `china_holiday` VALUES (26, '20220605', '0', '0', '2022-11-01 21:50:52', NULL);
+INSERT INTO `china_holiday` VALUES (27, '20221001', '0', '0', '2022-11-01 21:53:20', NULL);
+INSERT INTO `china_holiday` VALUES (28, '20221002', '0', '0', '2022-11-01 21:53:21', NULL);
+INSERT INTO `china_holiday` VALUES (29, '20221003', '0', '0', '2022-11-01 21:53:21', NULL);
+INSERT INTO `china_holiday` VALUES (30, '20221004', '0', '0', '2022-11-01 21:53:21', NULL);
+INSERT INTO `china_holiday` VALUES (31, '20221005', '0', '0', '2022-11-01 21:53:21', NULL);
+INSERT INTO `china_holiday` VALUES (32, '20221006', '0', '0', '2022-11-01 21:53:21', NULL);
+INSERT INTO `china_holiday` VALUES (33, '20221007', '0', '0', '2022-11-01 21:53:21', NULL);
+INSERT INTO `china_holiday` VALUES (34, '20221008', '1', '0', '2022-11-01 21:53:21', NULL);
+INSERT INTO `china_holiday` VALUES (35, '20221009', '1', '0', '2022-11-01 21:53:21', NULL);
+INSERT INTO `china_holiday` VALUES (36, '20220910', '0', '0', '2022-11-01 22:02:55', NULL);
+INSERT INTO `china_holiday` VALUES (37, '20220911', '0', '0', '2022-11-01 22:02:55', NULL);
+INSERT INTO `china_holiday` VALUES (38, '20220912', '0', '0', '2022-11-01 22:02:55', NULL);
+
+-- ----------------------------
 -- Table structure for comment
 -- ----------------------------
 DROP TABLE IF EXISTS `comment`;
@@ -193,8 +249,6 @@ CREATE TABLE `message`  (
 -- Records of message
 -- ----------------------------
 INSERT INTO `message` VALUES (1, '11', '11', '11', '1', '11', 1, '1', '2022-08-09 16:20:49', '2022-08-19 16:21:58', '1');
-INSERT INTO `message` VALUES (2, '11', '11', '11', '1', '11', 1, '1', '2022-08-09 16:20:49', '2022-08-19 16:21:58', '1');
-INSERT INTO `message` VALUES (3, '11', '11', '11', '1', '11', 1, '1', '2022-08-09 16:20:49', '2022-08-19 16:21:58', '1');
 
 -- ----------------------------
 -- Table structure for page
@@ -208,7 +262,7 @@ CREATE TABLE `page`  (
   `create_time` datetime(0) NOT NULL COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of page
@@ -495,7 +549,7 @@ CREATE TABLE `web_info_config`  (
   `create_time` datetime(0) NOT NULL COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of web_info_config
