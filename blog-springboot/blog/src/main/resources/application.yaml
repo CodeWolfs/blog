@@ -12,10 +12,11 @@ spring:
     password: root
     url: jdbc:mysql://localhost:3306/blog
     driver-class-name: com.mysql.cj.jdbc.Driver
+  #redis
   redis:
-    host: localhost
+    host: 107.173.86.186
     port: 6379
-    password: 123456
+    password: root
     lettuce:
       pool:
         max-active: 8
@@ -23,6 +24,12 @@ spring:
         max-idle: 500
         min-idle: 0
     database: 2
+  #rabbitmq
+  rabbitmq:
+    host: 107.173.86.186
+    port: 5672
+    username: admin
+    password: admin
   #security
   security:
     user:
@@ -77,5 +84,6 @@ secure:
       - /userAuth/register
       - /userAuth/sendRegisterMailCode
       - /userAuth/login
+      - /admin/**
 
 

@@ -34,14 +34,14 @@ public class MenuController {
     private MenuService menuService;
 
     @ApiOperation("后台查询菜单列表")
-    @GetMapping("/admin/Menus")
+    @GetMapping("/admin/menus")
     public Result<List<MenuDto>> selectMenus() {
         List<MenuDto> list = menuService.selectMenus();
         return Result.ok(list);
     }
 
     @ApiOperation("后台通过菜单名称查询菜单列表")
-    @GetMapping("/admin/Menus/condition")
+    @GetMapping("/admin/menus/condition")
     public Result<List<Menu>> selectMenusByCondition(@Validated SelectMenusVo selectMenusVo) {
         List<Menu> list = menuService.selectMenusByCondition(selectMenusVo);
         return Result.ok(list);
@@ -49,14 +49,14 @@ public class MenuController {
 
 
     @ApiOperation("后台添加菜单")
-    @PostMapping("/admin/Menu")
+    @PostMapping("/admin/menu")
     public Result<?> insertMenu(@Validated @RequestBody InsertMenuVo insertMenuVo) {
         menuService.insertMenu(insertMenuVo);
         return Result.ok();
     }
 
     @ApiOperation("后台查询菜单详情")
-    @GetMapping("/admin/Menu/{id}")
+    @GetMapping("/admin/menu/{id}")
     @ApiImplicitParam(name = "id", value = "菜单id", dataTypeClass = Integer.class, paramType = "path",required = true)
     public Result<Menu> selectMenuByPrimaryKey(@Valid @NotNull(message = "菜单id不能为空") @PathVariable("id") Integer id) {
         Menu byId = menuService.getById(id);
@@ -64,14 +64,14 @@ public class MenuController {
     }
 
     @ApiOperation("后台修改菜单")
-    @PatchMapping("/admin/Menu")
+    @PatchMapping("/admin/menu")
     public Result<?> updateMenu(@Validated @RequestBody UpdateMenuVo updateMenuVo) {
         menuService.updateMenu(updateMenuVo);
         return Result.ok();
     }
 
     @ApiOperation("后台删除菜单")
-    @DeleteMapping("/admin/Menu/{id}")
+    @DeleteMapping("/admin/menu/{id}")
     @ApiImplicitParam(name = "id", value = "菜单id", dataTypeClass = Integer.class, paramType = "path",required = true)
     public Result<?> deleteMenuByPrimaryKey(@Valid @NotNull(message = "菜单id不能为空") @PathVariable("id") Integer id) {
         menuService.deleteMenuByPrimaryKey(id);
